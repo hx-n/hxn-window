@@ -46,8 +46,9 @@ runs:
         make -C "$RUNNER_TEMP/hashlink" libhl hl
         echo "$RUNNER_TEMP/hashlink" >> "$GITHUB_PATH"
         echo "LD_LIBRARY_PATH=$RUNNER_TEMP/hashlink" >> "$GITHUB_ENV"
-    # The HashLink library links against the VM's on Windows.
-    - if: (inputs.runtime == 'hl' || inputs.runtime == 'package') && runner.os == 'Windows'
+    # The HashLink library links against the VM's libhl.lib on Windows, for
+    # Ash too, which loads it through its own libhl.dll.
+    - if: (inputs.runtime == 'hl' || inputs.runtime == 'ash' || inputs.runtime == 'package') && runner.os == 'Windows'
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
