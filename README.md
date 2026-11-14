@@ -1,13 +1,13 @@
 # hxn-window
 
-Windowing and surfaces for Haxe, on HashLink, Ash, hxcpp and CPPIA. A
-program opens windows and takes their events: keyboard and text input,
-mouse, touch, gestures and dropped files. It also sets cursors, reads
-monitors and their video modes, uses the clipboard and polls gamepads. Each
-window hands a GPU library the native handles it needs for a surface to
-render into.
+[![Ash](https://github.com/hx-n/hxn-window/actions/workflows/ash.yml/badge.svg)](https://github.com/hx-n/hxn-window/actions/workflows/ash.yml)
+[![HashLink](https://github.com/hx-n/hxn-window/actions/workflows/hashlink.yml/badge.svg)](https://github.com/hx-n/hxn-window/actions/workflows/hashlink.yml)
+[![hxcpp](https://github.com/hx-n/hxn-window/actions/workflows/hxcpp.yml/badge.svg)](https://github.com/hx-n/hxn-window/actions/workflows/hxcpp.yml)
+[![CPPIA](https://github.com/hx-n/hxn-window/actions/workflows/cppia.yml/badge.svg)](https://github.com/hx-n/hxn-window/actions/workflows/cppia.yml)
 
-The same program compiles for HashLink and for hxcpp.
+A windowing and surface API for Haxe, over winit, for HashLink, Ash, hxcpp
+and CPPIA. The same program compiles for each runtime, and each window
+exposes its native handles for creating a GPU surface.
 
 ```haxe
 import window.Window;
@@ -35,50 +35,37 @@ class Main {
 }
 ```
 
-## The API
+## Classes
 
-The classes are in the package `window`:
+All in the package `window`:
 
-| Class | What it is |
+| Class | |
 |---|---|
-| `WindowAttributes` | What a window opens with: title, size, position, decorations, transparency, level, theme, icon. |
-| `Window` | An open window: its events from `poll` and `wait`, its size, position, state and cursor, and the clipboard. |
-| `Event` | One event, such as `Closed`, `Resized`, `KeyboardInput`, `MouseInput`, `Touch` or `Ime`; `None` when none came in time. |
-| `Monitor`, `VideoMode` | The displays a window can be on, and the modes they run at. |
-| `Gamepad` | Connected gamepads, their buttons and axes, and their events. |
+| `WindowAttributes` | Set before `Window.open`: title, size, position, decorations, transparency, level, theme, icon. |
+| `Window` | Events through `poll` and `wait`, geometry and state, cursor, IME and the clipboard. |
+| `Event` | `Closed`, `Resized`, `KeyboardInput`, `MouseInput`, `Touch`, `Ime` and the rest; `None` when `wait` times out. |
+| `Monitor`, `VideoMode` | Displays and their video modes. |
+| `Gamepad` | Buttons, axes, rumble and their events. |
 
-`Window.wait` lets the runtime collect garbage while it waits. A failure the
-platform reports is thrown as a Haxe exception.
+`Window.wait` is a blocking call; the GC can run while it blocks. Platform
+errors are thrown as Haxe exceptions.
 
-## A surface to render into
+## Surfaces
 
-A window reaches a GPU library as a platform code and four integers, its
-native window and display handles:
+`window.platform()` returns a platform code, and `window.raw(0)` through
+`window.raw(3)` return the native window and display handles. The codes are
+1 AppKit, 2 Win32, 3 Xlib, 4 Wayland, 5 Android and 6 UIKit. xgpu's
+`GpuInstance.surface` takes the code and the four handles in that order.
 
-```haxe
-var platform = window.platform();
-var handles = [for (which in 0...4) window.raw(which)];
-```
+## Platforms
 
-The codes are 1 AppKit, 2 Win32, 3 Xlib, 4 Wayland, 5 Android and 6 UIKit.
-xgpu's `GpuInstance.surface` takes the code and the four integers directly.
+CI runs each runtime on Linux, macOS and Windows, except HashLink, which runs
+on Linux and Windows. Android, iOS and wasm builds are not set up yet.
 
-## Runtimes
+## Building
 
-| Runtime | Status |
-|---|---|
-| Ash (hybrid, JIT, interpreter) | Runs `tests/run.sh` on macOS. |
-| hxcpp | Runs `tests/run.sh` on macOS. |
-| CPPIA | Runs `tests/run.sh` on macOS. |
-| HashLink | Not run yet. |
-| Linux, Windows | Not run yet. |
-| Android, iOS | Not run yet. |
-| wasm | Not built yet. |
-
-## Using it
-
-Install the `hxn` command (see [hxn](https://github.com/hx-n/hxn)'s readme),
-Rust and Haxe 4.3. In this directory:
+Requires the [hxn](https://github.com/hx-n/hxn) CLI, Rust and Haxe 4.3. In
+this directory:
 
 ```
 hxn run hl              # HashLink, or --vm ash
@@ -86,33 +73,28 @@ hxn run cpp             # hxcpp
 hxn package --out ../xwindow-haxelib
 ```
 
-`hxn package` writes a haxelib named `xwindow`, which a program uses with
-`-lib xwindow`.
+`hxn package` writes a haxelib named `xwindow`, used with `-lib xwindow`.
 
-## How the API is generated
+## How the binding is generated
 
-The window API is declared once, in
-[xwindow](https://github.com/rayzor-blade/xwindow), which also has the native
-backend over winit. `build.rs` installs that backend, and
-[x-idl](https://github.com/rayzor-blade/x-idl)'s hxn target writes the
-binding from the declaration: carriers over plain Rust, x-idl's model of the
-API, and over it the Rust items [hxn](https://github.com/hx-n/hxn) reads.
+The API is declared in [xwindow](https://github.com/rayzor-blade/xwindow),
+along with its native backend over winit. `build.rs` installs the backend,
+and [x-idl](https://github.com/rayzor-blade/x-idl)'s hxn target writes the
+binding from the declaration. `hxn build` runs the build script first, then
+generates each runtime's adapter and the Haxe classes from that binding.
+Changing the API means changing xwindow's declaration and updating the
+xwindow revision this crate pins.
 
-`hxn build` runs the build script first and reads the binding from its
-output. It then generates the adapter for the runtime and the Haxe classes.
-A change to the API is made in xwindow's declaration, and reaches this
-library when its xwindow revision is updated.
+## Local checkouts
 
-## Developing against checkouts
-
-To build against local checkouts of hxn, x-idl and xwindow beside this one,
-put `[patch]` tables for their git URLs in `.cargo/config.toml`, which git
-ignores. The tests run with:
+To build against checkouts of hxn, x-idl and xwindow beside this one, put
+`[patch]` tables for their git URLs in `.cargo/config.toml`, which git
+ignores. `hxn check` runs `haxe/Main.hx`, a headless-window test, on each
+runtime named and fails unless every run passes and prints the same output:
 
 ```
-tests/run.sh hl ash
-tests/run.sh cpp
-tests/run.sh cppia
+hxn check hl --vm ash
+hxn check cpp cppia
 ```
 
 ## License
