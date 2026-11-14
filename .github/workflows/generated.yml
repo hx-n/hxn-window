@@ -23,7 +23,7 @@ jobs:
           runtime: package
       - run: hxn package hl cpp --release --out .
       - run: |
-          changed="$(git status --porcelain --untracked-files=all -- . ':(exclude)native')"
+          changed="$(git status --porcelain --untracked-files=all -- binding include haxelib.json extraParams.hxml xwindow.hxn.json)"
           if [ -n "$changed" ]; then
             echo "$changed"
             git diff

@@ -51,7 +51,8 @@ haxe -lib hxn-window -main Main -cpp out
 The haxelib contains the generated classes and prebuilt native libraries for
 Linux x86-64, macOS arm64 and Windows x86-64, so a program needs no Rust. For
 HashLink, the native library is copied next to the `.hl` output at compile
-time. Each GitHub release also has the haxelib as a ZIP, which
+time. On Linux, hxcpp links against libudev for gamepads: install
+`libudev-dev`. Each GitHub release also has the haxelib as a ZIP, which
 `haxelib install hxn-window-<version>.zip` installs.
 
 The generated classes are also committed to this repository, so the API can

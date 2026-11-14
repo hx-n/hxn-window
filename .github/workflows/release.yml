@@ -82,7 +82,7 @@ jobs:
       - if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libxkbcommon-x11-0 libx11-6 libxcursor1 libxrandr2 libxi6 xvfb xauth
+          sudo apt-get install -y libxkbcommon-x11-0 libx11-6 libxcursor1 libxrandr2 libxi6 libudev-dev xvfb xauth
       - if: runner.os != 'macOS'
         uses: krdlab/setup-haxe@v1
         with:
@@ -111,7 +111,8 @@ jobs:
             Windows) archive=ash-windows-x86_64.tar.gz ;;
           esac
           mkdir -p "$RUNNER_TEMP/ash"
-          curl -fsSL "https://github.com/rayzor-blade/ash/releases/download/v0.1.18/$archive" | tar -xz -C "$RUNNER_TEMP/ash"
+          # Extracted in place: tar reads a Windows path's drive as a host.
+          (cd "$RUNNER_TEMP/ash" && curl -fsSL "https://github.com/rayzor-blade/ash/releases/download/v0.1.18/$archive" | tar -xz)
           echo "ASH=$RUNNER_TEMP/ash/ash" >> "$GITHUB_ENV"
       - name: Build and run on Ash and hxcpp
         working-directory: examples/headless
