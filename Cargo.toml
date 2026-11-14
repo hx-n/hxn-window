@@ -15,7 +15,7 @@ name = "hxn_window"
 # start with `xwindow_`.
 library = "xwindow"
 haxelib = "hxn-window"
-contributors = ["rayzor", "darmie"]
+contributors = ["darmie", "rayzor"]
 releasenote = "First release: windows, input, monitors, gamepads and surface handles on HashLink, Ash, hxcpp and CPPIA."
 # The headless-window test `hxn check` and `hxn run` build.
 haxe = "examples/headless"

@@ -135,7 +135,7 @@ jobs:
       - uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.3.6
-      # With several contributors, haxelib takes the submitting account's name.
+      # haxelib accepts a new project only from its first contributor.
       - env:
           HAXELIB_PASSWORD: ${{ secrets.HAXELIB_PASSWORD }}
         run: haxelib submit "$ZIP" darmie "$HAXELIB_PASSWORD" --never < /dev/null

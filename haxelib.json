@@ -5,7 +5,7 @@
   "url": "https://github.com/hx-n/hxn-window",
   "license": "Apache",
   "tags": ["window", "input", "haxe"],
-  "contributors": ["rayzor", "darmie"],
+  "contributors": ["darmie", "rayzor"],
   "releasenote": "First release: windows, input, monitors, gamepads and surface handles on HashLink, Ash, hxcpp and CPPIA.",
   "dependencies": { "hxn": "0.3.1" }
 }
