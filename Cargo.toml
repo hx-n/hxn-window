@@ -2,7 +2,7 @@
 name = "hxn-window"
 version = "0.1.0"
 edition = "2024"
-description = "xwindow for Haxe through hxn: windows, input and monitors"
+description = "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering"
 repository = "https://github.com/hx-n/hxn-window"
 license = "Apache-2.0"
 keywords = ["window", "input", "haxe"]
@@ -11,8 +11,8 @@ keywords = ["window", "input", "haxe"]
 name = "hxn_window"
 
 [package.metadata.hxn]
-# The binary and symbol name hlwindow uses, so a program and Ash find it the
-# same way.
+# The native library is `xwindow.hdll` or `libxwindow.a`, and its symbols
+# start with `xwindow_`.
 library = "xwindow"
 
 [build-dependencies]
