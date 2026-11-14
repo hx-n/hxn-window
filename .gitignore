@@ -2,3 +2,5 @@
 /Cargo.lock.bak
 # Local overrides of the git dependencies, for building against checkouts.
 /.cargo/config.toml
+# Native libraries: built for each platform by the release workflow.
+/native

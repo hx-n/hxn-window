@@ -14,6 +14,9 @@ name = "hxn_window"
 # The native library is `xwindow.hdll` or `libxwindow.a`, and its symbols
 # start with `xwindow_`.
 library = "xwindow"
+haxelib = "hxn-window"
+contributors = ["rayzor", "darmie"]
+releasenote = "First release: windows, input, monitors, gamepads and surface handles on HashLink, Ash, hxcpp and CPPIA."
 # The headless-window test `hxn check` and `hxn run` build.
 haxe = "examples/headless"
 
@@ -23,7 +26,7 @@ xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "
 xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 
 [dependencies]
-hxn = { git = "https://github.com/hx-n/hxn.git", rev = "2691f441eda06cc80f4ce4d33e6bc770ca5dacaf" }
+hxn = { git = "https://github.com/hx-n/hxn.git", rev = "af1e59e8a81e64dd127c8cf4e2d0b48754841c5f" }
 xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 xwindow-gamepad = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 

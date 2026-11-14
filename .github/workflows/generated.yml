@@ -1,0 +1,32 @@
+name: Haxe sources
+
+# The generated Haxe classes, headers and haxelib.json are committed, so that
+# a Haxe program needs no Rust; this fails when they are not what the
+# library's source gives.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  generated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          runtime: package
+      - run: hxn package hl cpp --release --out .
+      - run: |
+          changed="$(git status --porcelain --untracked-files=all -- . ':(exclude)native')"
+          if [ -n "$changed" ]; then
+            echo "$changed"
+            git diff
+            echo "::error::the generated files differ from what the source gives: run hxn package hl cpp --out . and commit them"
+            exit 1
+          fi

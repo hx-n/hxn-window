@@ -3,7 +3,7 @@ description: Rust, Haxe, the hxn command at the revision Cargo.toml pins, and a 
 
 inputs:
   runtime:
-    description: hl (stock HashLink), ash, cpp or cppia
+    description: hl (stock HashLink), ash, cpp, cppia, or package (what `hxn package` needs)
     required: true
 
 runs:
@@ -46,7 +46,8 @@ runs:
         make -C "$RUNNER_TEMP/hashlink" libhl hl
         echo "$RUNNER_TEMP/hashlink" >> "$GITHUB_PATH"
         echo "LD_LIBRARY_PATH=$RUNNER_TEMP/hashlink" >> "$GITHUB_ENV"
-    - if: inputs.runtime == 'hl' && runner.os == 'Windows'
+    # The HashLink library links against the VM's on Windows.
+    - if: (inputs.runtime == 'hl' || inputs.runtime == 'package') && runner.os == 'Windows'
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}

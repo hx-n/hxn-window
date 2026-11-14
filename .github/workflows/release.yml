@@ -1,0 +1,146 @@
+name: release
+
+# Builds the haxelib: the generated Haxe classes and the native libraries for
+# each platform, so a program needs only Haxe, and tries it on each platform
+# without Rust. A tag `v*` then publishes it as a release asset and submits it
+# to haxelib; run by hand, it is a dry run that keeps the ZIP as an artifact.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  package:
+    name: package, ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          runtime: package
+      - run: hxn package hl cpp --release --out package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-${{ matrix.os }}
+          path: package
+
+  haxelib:
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: parts
+      # The classes and the manifest are the same on every platform; each
+      # platform adds its native/<triple>/.
+      - run: |
+          mkdir haxelib
+          cp -R parts/package-ubuntu-latest/. haxelib/
+          for part in parts/*/; do
+            cp -R "$part/native/." haxelib/native/
+          done
+          cp README.md LICENSE haxelib/
+          ls haxelib/native
+          version="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
+          (cd haxelib && zip -qr "../hxn-window-$version.zip" .)
+          echo "ZIP=hxn-window-$version.zip" >> "$GITHUB_ENV"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: haxelib
+          path: ${{ env.ZIP }}
+
+  # What a Haxe developer does, with no Rust: install the ZIP and build the
+  # headless example against it, then run it on Ash and hxcpp.
+  try:
+    name: try, ${{ matrix.os }}
+    needs: haxelib
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            examples
+            Cargo.toml
+      - uses: actions/download-artifact@v4
+        with:
+          name: haxelib
+      - if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxkbcommon-x11-0 libx11-6 libxcursor1 libxrandr2 libxi6 xvfb xauth
+      - if: runner.os != 'macOS'
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.6
+      - if: runner.os == 'macOS'
+        run: |
+          brew install haxe
+          mkdir -p "$HOME/haxelib" && haxelib setup "$HOME/haxelib"
+      # hxn's haxelib at the revision the package was generated with.
+      - name: Install hxn, the haxelib and hxcpp
+        run: |
+          rev="$(sed -n 's|^hxn = { git = "https://github.com/hx-n/hxn.git", rev = "\([0-9a-f]*\)" }|\1|p' Cargo.toml)"
+          git clone -q https://github.com/hx-n/hxn "$RUNNER_TEMP/hxn"
+          git -C "$RUNNER_TEMP/hxn" checkout -q "$rev"
+          haxelib dev hxn "$RUNNER_TEMP/hxn"
+          haxelib install hxn-window-*.zip --always --skip-dependencies
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp --quiet
+          dir="$(haxelib libpath hxcpp)"
+          git -C "$dir" checkout -q 615adc73d5ef28f3f74ea47977c39c4f25ce256d
+          (cd "$dir/tools/hxcpp" && haxe compile.hxml)
+      - name: Install Ash
+        run: |
+          case "$RUNNER_OS" in
+            Linux) archive=ash-linux-x86_64.tar.gz ;;
+            macOS) archive=ash-macos-aarch64.tar.gz ;;
+            Windows) archive=ash-windows-x86_64.tar.gz ;;
+          esac
+          mkdir -p "$RUNNER_TEMP/ash"
+          curl -fsSL "https://github.com/rayzor-blade/ash/releases/download/v0.1.18/$archive" | tar -xz -C "$RUNNER_TEMP/ash"
+          echo "ASH=$RUNNER_TEMP/ash/ash" >> "$GITHUB_ENV"
+      - name: Build and run on Ash and hxcpp
+        working-directory: examples/headless
+        run: |
+          run() { if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a "$@"; else "$@"; fi; }
+          haxe -lib hxn-window -main Main -hl main.hl
+          run "$ASH" main.hl
+          haxe -lib hxn-window -main Main -cpp out
+          run out/Main
+
+  publish:
+    needs: [haxelib, try]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: haxelib
+      - run: echo "ZIP=$(ls hxn-window-*.zip)" >> "$GITHUB_ENV"
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" "$ZIP" --title "$GITHUB_REF_NAME" --notes "$(sed -n 's/^releasenote = "\(.*\)"/\1/p' Cargo.toml)"
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.6
+      # With several contributors, haxelib takes the submitting account's name.
+      - env:
+          HAXELIB_PASSWORD: ${{ secrets.HAXELIB_PASSWORD }}
+        run: haxelib submit "$ZIP" darmie "$HAXELIB_PASSWORD" --never < /dev/null
