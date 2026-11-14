@@ -1,0 +1,34 @@
+name: Ash
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check:
+    name: Ash, ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          runtime: ash
+      # On Linux the window opens on a virtual X display.
+      - if: runner.os == 'Linux'
+        run: xvfb-run -a hxn check hl --vm ash
+      - if: runner.os != 'Linux'
+        run: hxn check hl --vm ash

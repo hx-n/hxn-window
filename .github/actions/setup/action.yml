@@ -1,0 +1,81 @@
+name: setup
+description: Rust, Haxe, the hxn command at the revision Cargo.toml pins, and a runtime.
+
+inputs:
+  runtime:
+    description: hl (stock HashLink), ash, cpp or cppia
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: nightly-2026-08-25
+    - uses: Swatinem/rust-cache@v2
+    # winit and gilrs on Linux, and a display for the window.
+    - if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libxkbcommon-dev libxkbcommon-x11-0 libwayland-dev libx11-dev \
+          libxcursor1 libxrandr2 libxi6 libudev-dev xvfb xauth
+    # setup-haxe has no Haxe for arm64 macOS, which Homebrew has.
+    - if: runner.os != 'macOS'
+      uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.3.6
+    - if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        brew install haxe
+        mkdir -p "$HOME/haxelib" && haxelib setup "$HOME/haxelib"
+    # From git, at a commit after HaxeFoundation/hxcpp#1298: 4.3.2 can crash
+    # on Windows when a program exits right after a collection.
+    - if: inputs.runtime == 'cpp' || inputs.runtime == 'cppia'
+      shell: bash
+      run: |
+        haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp --quiet
+        dir="$(haxelib libpath hxcpp)"
+        git -C "$dir" checkout -q 615adc73d5ef28f3f74ea47977c39c4f25ce256d
+        (cd "$dir/tools/hxcpp" && haxe compile.hxml)
+    - if: inputs.runtime == 'hl' && runner.os == 'Linux'
+      shell: bash
+      run: |
+        git clone --depth 1 --branch 1.15 https://github.com/HaxeFoundation/hashlink "$RUNNER_TEMP/hashlink"
+        make -C "$RUNNER_TEMP/hashlink" libhl hl
+        echo "$RUNNER_TEMP/hashlink" >> "$GITHUB_PATH"
+        echo "LD_LIBRARY_PATH=$RUNNER_TEMP/hashlink" >> "$GITHUB_ENV"
+    - if: inputs.runtime == 'hl' && runner.os == 'Windows'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        temp="$(cygpath -u "$RUNNER_TEMP")"
+        gh release download 1.15 --repo HaxeFoundation/hashlink --pattern '*-win.zip' --dir "$temp"
+        unzip -q "$temp"/*-win.zip -d "$temp/hl"
+        dir="$(dirname "$(find "$temp/hl" -name hl.exe | head -1)")"
+        cygpath -w "$dir" >> "$GITHUB_PATH"
+    - if: inputs.runtime == 'ash'
+      shell: bash
+      run: |
+        case "$RUNNER_OS" in
+          Linux) archive=ash-linux-x86_64.tar.gz ;;
+          macOS) archive=ash-macos-aarch64.tar.gz ;;
+          Windows) archive=ash-windows-x86_64.tar.gz ;;
+        esac
+        mkdir -p "$RUNNER_TEMP/ash"
+        curl -fsSL "https://github.com/rayzor-blade/ash/releases/download/v0.1.18/$archive" | tar -xz -C "$RUNNER_TEMP/ash"
+        if [ "$RUNNER_OS" = Windows ]; then
+          cygpath -w "$RUNNER_TEMP/ash" >> "$GITHUB_PATH"
+        else
+          echo "$RUNNER_TEMP/ash" >> "$GITHUB_PATH"
+        fi
+    # The command at the revision the crate's hxn dependency is pinned to,
+    # since the two must match.
+    - shell: bash
+      run: |
+        rev="$(sed -n 's|^hxn = { git = "https://github.com/hx-n/hxn.git", rev = "\([0-9a-f]*\)" }|\1|p' Cargo.toml)"
+        test -n "$rev"
+        cargo install --git https://github.com/hx-n/hxn.git --rev "$rev" --locked hxn-cli
+        hxn version

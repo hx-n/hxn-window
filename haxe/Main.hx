@@ -1,10 +1,19 @@
-import window.Event;
 import window.Theme;
 import window.Window;
 import window.WindowAttributes;
 
-/** Opens a window that is not shown, reads it back, takes its events for a moment and closes it. **/
+/**
+	Opens a headless window, reads its properties back, polls its events
+	briefly and closes it. `hxn check` runs it on each runtime: it exits with 1
+	on a failed check, and every runtime must print the same output.
+**/
 class Main {
+	static function check(holds:Bool, what:String) {
+		Sys.println('$what: ${holds ? "yes" : "no"}');
+		if (!holds)
+			Sys.exit(1);
+	}
+
 	static function main() {
 		var attributes = new WindowAttributes();
 		attributes.title("hxn window");
@@ -12,23 +21,22 @@ class Main {
 		attributes.height(200);
 		attributes.visible(false);
 		var window = Window.open(attributes);
-		Sys.println('opened: ${window.valid()}');
-		Sys.println('title: ${window.title()}');
+		check(window.valid(), "opened");
+		check(window.title() == "hxn window", "titled");
 		window.setTheme(Theme.Dark);
 
-		// Every event is a value of `Event`; `None` means nothing came in time.
+		// `wait` returns `None` when it times out.
 		var waits = 0;
 		while (waits < 20) {
 			switch window.wait(0.01) {
 				case None:
 					waits++;
-				case Resized(width, height):
 				case _:
 			}
 		}
-		Sys.println("events taken");
+		check(true, "waited");
 
 		window.close();
-		Sys.println("closed");
+		check(true, "closed");
 	}
 }
