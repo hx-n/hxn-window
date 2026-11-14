@@ -26,7 +26,7 @@ xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "
 xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 
 [dependencies]
-hxn = { git = "https://github.com/hx-n/hxn.git", rev = "f6a65f12c3537a0ccff419baa8d9fca02c354736" }
+hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.1" }
 xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 xwindow-gamepad = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 

@@ -76,11 +76,11 @@ runs:
         else
           echo "$RUNNER_TEMP/ash" >> "$GITHUB_PATH"
         fi
-    # The command at the revision the crate's hxn dependency is pinned to,
-    # since the two must match.
+    # The command of the hxn release the crate depends on, since the two must
+    # match.
     - shell: bash
       run: |
-        rev="$(sed -n 's|^hxn = { git = "https://github.com/hx-n/hxn.git", rev = "\([0-9a-f]*\)" }|\1|p' Cargo.toml)"
-        test -n "$rev"
-        cargo install --git https://github.com/hx-n/hxn.git --rev "$rev" --locked hxn-cli
+        tag="$(sed -n 's|^hxn = { git = "https://github.com/hx-n/hxn.git", tag = "\(v[0-9.]*\)" }|\1|p' Cargo.toml)"
+        test -n "$tag"
+        cargo install --git https://github.com/hx-n/hxn.git --tag "$tag" --locked hxn-cli
         hxn version

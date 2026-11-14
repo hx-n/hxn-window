@@ -73,9 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: |
-            examples
-            Cargo.toml
+          sparse-checkout: examples
       - uses: actions/download-artifact@v4
         with:
           name: haxelib
@@ -91,14 +89,10 @@ jobs:
         run: |
           brew install haxe
           mkdir -p "$HOME/haxelib" && haxelib setup "$HOME/haxelib"
-      # hxn's haxelib at the revision the package was generated with.
-      - name: Install hxn, the haxelib and hxcpp
+      # The hxn haxelib the package depends on comes from haxelib with it.
+      - name: Install the haxelib and hxcpp
         run: |
-          rev="$(sed -n 's|^hxn = { git = "https://github.com/hx-n/hxn.git", rev = "\([0-9a-f]*\)" }|\1|p' Cargo.toml)"
-          git clone -q https://github.com/hx-n/hxn "$RUNNER_TEMP/hxn"
-          git -C "$RUNNER_TEMP/hxn" checkout -q "$rev"
-          haxelib dev hxn "$RUNNER_TEMP/hxn"
-          haxelib install hxn-window-*.zip --always --skip-dependencies
+          haxelib install hxn-window-*.zip --always
           haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp --quiet
           dir="$(haxelib libpath hxcpp)"
           git -C "$dir" checkout -q 615adc73d5ef28f3f74ea47977c39c4f25ce256d

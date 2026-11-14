@@ -7,5 +7,5 @@
   "tags": ["window", "input", "haxe"],
   "contributors": ["rayzor", "darmie"],
   "releasenote": "First release: windows, input, monitors, gamepads and surface handles on HashLink, Ash, hxcpp and CPPIA.",
-  "dependencies": { "hxn": "0.2.0" }
+  "dependencies": { "hxn": "0.3.1" }
 }
