@@ -58,6 +58,8 @@ runs:
         unzip -q "$temp"/*-win.zip -d "$temp/hl"
         dir="$(dirname "$(find "$temp/hl" -name hl.exe | head -1)")"
         cygpath -w "$dir" >> "$GITHUB_PATH"
+        # Where hxn finds libhl.lib, whichever VM runs the program.
+        echo "HXN_HL_DIR=$(cygpath -w "$dir")" >> "$GITHUB_ENV"
     - if: inputs.runtime == 'ash'
       shell: bash
       run: |
