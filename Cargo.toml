@@ -14,6 +14,8 @@ name = "hxn_window"
 # The native library is `xwindow.hdll` or `libxwindow.a`, and its symbols
 # start with `xwindow_`.
 library = "xwindow"
+# The headless-window test `hxn check` and `hxn run` build.
+haxe = "examples/headless"
 
 [build-dependencies]
 x_idl = { git = "https://github.com/rayzor-blade/x-idl.git", rev = "5de6b554635f1109a7a96fdb23168a79d556de3c" }
