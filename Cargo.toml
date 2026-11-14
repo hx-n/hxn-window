@@ -1,0 +1,36 @@
+[package]
+name = "hxn-window"
+version = "0.1.0"
+edition = "2024"
+description = "xwindow for Haxe through hxn: windows, input and monitors"
+repository = "https://github.com/hx-n/hxn-window"
+license = "Apache-2.0"
+keywords = ["window", "input", "haxe"]
+
+[lib]
+name = "hxn_window"
+
+[package.metadata.hxn]
+# The binary and symbol name hlwindow uses, so a program and Ash find it the
+# same way.
+library = "xwindow"
+
+[build-dependencies]
+x_idl = { git = "https://github.com/rayzor-blade/x-idl.git", rev = "5de6b554635f1109a7a96fdb23168a79d556de3c" }
+xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
+xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
+
+[dependencies]
+hxn = { git = "https://github.com/hx-n/hxn.git", rev = "2691f441eda06cc80f4ce4d33e6bc770ca5dacaf" }
+xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
+xwindow-gamepad = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
+
+[target.'cfg(not(target_os = "wasi"))'.dependencies]
+winit = "0.30"
+raw-window-handle = "0.6"
+xwindow-appicon = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
+xwindow-clipboard = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
+
+# winit on Android needs the activity the host starts.
+[target.'cfg(target_os = "android")'.dependencies]
+winit = { version = "0.30", features = ["android-native-activity"] }

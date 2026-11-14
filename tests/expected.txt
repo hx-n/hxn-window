@@ -1,0 +1,4 @@
+opened: true
+title: hxn window
+events taken
+closed

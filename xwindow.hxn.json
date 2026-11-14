@@ -1,0 +1,1544 @@
+{
+  "hxn": 1,
+  "library": "xwindow",
+  "package": "window",
+  "enums": [
+    {
+      "name": "WindowLevel",
+      "variants": [{ "name": "Normal", "value": 0 }, { "name": "AlwaysOnBottom", "value": 1 }, { "name": "AlwaysOnTop", "value": 2 }]
+    },
+    {
+      "name": "Theme",
+      "variants": [{ "name": "Light", "value": 0 }, { "name": "Dark", "value": 1 }]
+    },
+    {
+      "name": "ScaleSizing",
+      "docs": "How a window's size follows a change of scale: `Logical` keeps its\nlogical size, as winit suggests; `Physical` keeps its size in pixels.",
+      "variants": [{ "name": "Logical", "value": 0 }, { "name": "Physical", "value": 1 }]
+    },
+    {
+      "name": "ResizeDirection",
+      "docs": "The edge or corner `dragResizeWindow` resizes from.",
+      "variants": [{ "name": "East", "value": 0 }, { "name": "North", "value": 1 }, { "name": "NorthEast", "value": 2 }, { "name": "NorthWest", "value": 3 }, { "name": "South", "value": 4 }, { "name": "SouthEast", "value": 5 }, { "name": "SouthWest", "value": 6 }, { "name": "West", "value": 7 }]
+    },
+    {
+      "name": "ImePurpose",
+      "docs": "What an input method is told the text is for.",
+      "variants": [{ "name": "Normal", "value": 0 }, { "name": "Password", "value": 1 }, { "name": "Terminal", "value": 2 }]
+    },
+    {
+      "name": "DeviceEvents",
+      "docs": "When the platform delivers raw device events (`Event.Device`).",
+      "variants": [{ "name": "Always", "value": 0 }, { "name": "WhenFocused", "value": 1 }, { "name": "Never", "value": 2 }]
+    },
+    {
+      "name": "CursorGrab",
+      "variants": [{ "name": "None", "value": 0 }, { "name": "Confined", "value": 1 }, { "name": "Locked", "value": 2 }]
+    },
+    {
+      "name": "Attention",
+      "variants": [{ "name": "None", "value": 0 }, { "name": "Informational", "value": 1 }, { "name": "Critical", "value": 2 }]
+    },
+    {
+      "name": "MouseElementState",
+      "docs": "Whether a key or button is down.",
+      "variants": [{ "name": "Pressed", "value": 0 }, { "name": "Released", "value": 1 }]
+    },
+    {
+      "name": "TouchPhase",
+      "variants": [{ "name": "Started", "value": 0 }, { "name": "Moved", "value": 1 }, { "name": "Ended", "value": 2 }, { "name": "Cancelled", "value": 3 }]
+    },
+    {
+      "name": "KeyLocation",
+      "variants": [{ "name": "Standard", "value": 0 }, { "name": "Left", "value": 1 }, { "name": "Right", "value": 2 }, { "name": "Numpad", "value": 3 }]
+    },
+    {
+      "name": "ModifiersKeyState",
+      "variants": [{ "name": "Unknown", "value": 0 }, { "name": "Pressed", "value": 1 }]
+    },
+    {
+      "name": "GamepadButton",
+      "docs": "Positional buttons in the W3C standard gamepad layout; trigger values are analog.",
+      "variants": [{ "name": "South", "value": 0 }, { "name": "East", "value": 1 }, { "name": "West", "value": 2 }, { "name": "North", "value": 3 }, { "name": "LeftShoulder", "value": 4 }, { "name": "RightShoulder", "value": 5 }, { "name": "LeftTrigger", "value": 6 }, { "name": "RightTrigger", "value": 7 }, { "name": "Select", "value": 8 }, { "name": "Start", "value": 9 }, { "name": "LeftStick", "value": 10 }, { "name": "RightStick", "value": 11 }, { "name": "DPadUp", "value": 12 }, { "name": "DPadDown", "value": 13 }, { "name": "DPadLeft", "value": 14 }, { "name": "DPadRight", "value": 15 }, { "name": "Guide", "value": 16 }]
+    },
+    {
+      "name": "GamepadAxis",
+      "docs": "Stick values in [-1,1], with positive Y pointing down. No application dead zone.",
+      "variants": [{ "name": "LeftX", "value": 0 }, { "name": "LeftY", "value": 1 }, { "name": "RightX", "value": 2 }, { "name": "RightY", "value": 3 }]
+    },
+    {
+      "name": "KeyCode",
+      "docs": "A physical key, by its `KeyboardEvent.code` name.",
+      "variants": [{ "name": "Unrecognized", "value": 0 }, { "name": "Backquote", "value": 1 }, { "name": "Backslash", "value": 2 }, { "name": "BracketLeft", "value": 3 }, { "name": "BracketRight", "value": 4 }, { "name": "Comma", "value": 5 }, { "name": "Digit0", "value": 6 }, { "name": "Digit1", "value": 7 }, { "name": "Digit2", "value": 8 }, { "name": "Digit3", "value": 9 }, { "name": "Digit4", "value": 10 }, { "name": "Digit5", "value": 11 }, { "name": "Digit6", "value": 12 }, { "name": "Digit7", "value": 13 }, { "name": "Digit8", "value": 14 }, { "name": "Digit9", "value": 15 }, { "name": "Equal", "value": 16 }, { "name": "IntlBackslash", "value": 17 }, { "name": "IntlRo", "value": 18 }, { "name": "IntlYen", "value": 19 }, { "name": "KeyA", "value": 20 }, { "name": "KeyB", "value": 21 }, { "name": "KeyC", "value": 22 }, { "name": "KeyD", "value": 23 }, { "name": "KeyE", "value": 24 }, { "name": "KeyF", "value": 25 }, { "name": "KeyG", "value": 26 }, { "name": "KeyH", "value": 27 }, { "name": "KeyI", "value": 28 }, { "name": "KeyJ", "value": 29 }, { "name": "KeyK", "value": 30 }, { "name": "KeyL", "value": 31 }, { "name": "KeyM", "value": 32 }, { "name": "KeyN", "value": 33 }, { "name": "KeyO", "value": 34 }, { "name": "KeyP", "value": 35 }, { "name": "KeyQ", "value": 36 }, { "name": "KeyR", "value": 37 }, { "name": "KeyS", "value": 38 }, { "name": "KeyT", "value": 39 }, { "name": "KeyU", "value": 40 }, { "name": "KeyV", "value": 41 }, { "name": "KeyW", "value": 42 }, { "name": "KeyX", "value": 43 }, { "name": "KeyY", "value": 44 }, { "name": "KeyZ", "value": 45 }, { "name": "Minus", "value": 46 }, { "name": "Period", "value": 47 }, { "name": "Quote", "value": 48 }, { "name": "Semicolon", "value": 49 }, { "name": "Slash", "value": 50 }, { "name": "AltLeft", "value": 51 }, { "name": "AltRight", "value": 52 }, { "name": "Backspace", "value": 53 }, { "name": "CapsLock", "value": 54 }, { "name": "ContextMenu", "value": 55 }, { "name": "ControlLeft", "value": 56 }, { "name": "ControlRight", "value": 57 }, { "name": "Enter", "value": 58 }, { "name": "SuperLeft", "value": 59 }, { "name": "SuperRight", "value": 60 }, { "name": "ShiftLeft", "value": 61 }, { "name": "ShiftRight", "value": 62 }, { "name": "Space", "value": 63 }, { "name": "Tab", "value": 64 }, { "name": "Convert", "value": 65 }, { "name": "KanaMode", "value": 66 }, { "name": "Lang1", "value": 67 }, { "name": "Lang2", "value": 68 }, { "name": "Lang3", "value": 69 }, { "name": "Lang4", "value": 70 }, { "name": "Lang5", "value": 71 }, { "name": "NonConvert", "value": 72 }, { "name": "Delete", "value": 73 }, { "name": "End", "value": 74 }, { "name": "Help", "value": 75 }, { "name": "Home", "value": 76 }, { "name": "Insert", "value": 77 }, { "name": "PageDown", "value": 78 }, { "name": "PageUp", "value": 79 }, { "name": "ArrowDown", "value": 80 }, { "name": "ArrowLeft", "value": 81 }, { "name": "ArrowRight", "value": 82 }, { "name": "ArrowUp", "value": 83 }, { "name": "NumLock", "value": 84 }, { "name": "Numpad0", "value": 85 }, { "name": "Numpad1", "value": 86 }, { "name": "Numpad2", "value": 87 }, { "name": "Numpad3", "value": 88 }, { "name": "Numpad4", "value": 89 }, { "name": "Numpad5", "value": 90 }, { "name": "Numpad6", "value": 91 }, { "name": "Numpad7", "value": 92 }, { "name": "Numpad8", "value": 93 }, { "name": "Numpad9", "value": 94 }, { "name": "NumpadAdd", "value": 95 }, { "name": "NumpadBackspace", "value": 96 }, { "name": "NumpadClear", "value": 97 }, { "name": "NumpadClearEntry", "value": 98 }, { "name": "NumpadComma", "value": 99 }, { "name": "NumpadDecimal", "value": 100 }, { "name": "NumpadDivide", "value": 101 }, { "name": "NumpadEnter", "value": 102 }, { "name": "NumpadEqual", "value": 103 }, { "name": "NumpadHash", "value": 104 }, { "name": "NumpadMemoryAdd", "value": 105 }, { "name": "NumpadMemoryClear", "value": 106 }, { "name": "NumpadMemoryRecall", "value": 107 }, { "name": "NumpadMemoryStore", "value": 108 }, { "name": "NumpadMemorySubtract", "value": 109 }, { "name": "NumpadMultiply", "value": 110 }, { "name": "NumpadParenLeft", "value": 111 }, { "name": "NumpadParenRight", "value": 112 }, { "name": "NumpadStar", "value": 113 }, { "name": "NumpadSubtract", "value": 114 }, { "name": "Escape", "value": 115 }, { "name": "Fn", "value": 116 }, { "name": "FnLock", "value": 117 }, { "name": "PrintScreen", "value": 118 }, { "name": "ScrollLock", "value": 119 }, { "name": "Pause", "value": 120 }, { "name": "BrowserBack", "value": 121 }, { "name": "BrowserFavorites", "value": 122 }, { "name": "BrowserForward", "value": 123 }, { "name": "BrowserHome", "value": 124 }, { "name": "BrowserRefresh", "value": 125 }, { "name": "BrowserSearch", "value": 126 }, { "name": "BrowserStop", "value": 127 }, { "name": "Eject", "value": 128 }, { "name": "LaunchApp1", "value": 129 }, { "name": "LaunchApp2", "value": 130 }, { "name": "LaunchMail", "value": 131 }, { "name": "MediaPlayPause", "value": 132 }, { "name": "MediaSelect", "value": 133 }, { "name": "MediaStop", "value": 134 }, { "name": "MediaTrackNext", "value": 135 }, { "name": "MediaTrackPrevious", "value": 136 }, { "name": "Power", "value": 137 }, { "name": "Sleep", "value": 138 }, { "name": "AudioVolumeDown", "value": 139 }, { "name": "AudioVolumeMute", "value": 140 }, { "name": "AudioVolumeUp", "value": 141 }, { "name": "WakeUp", "value": 142 }, { "name": "Meta", "value": 143 }, { "name": "Hyper", "value": 144 }, { "name": "Turbo", "value": 145 }, { "name": "Abort", "value": 146 }, { "name": "Resume", "value": 147 }, { "name": "Suspend", "value": 148 }, { "name": "Again", "value": 149 }, { "name": "Copy", "value": 150 }, { "name": "Cut", "value": 151 }, { "name": "Find", "value": 152 }, { "name": "Open", "value": 153 }, { "name": "Paste", "value": 154 }, { "name": "Props", "value": 155 }, { "name": "Select", "value": 156 }, { "name": "Undo", "value": 157 }, { "name": "Hiragana", "value": 158 }, { "name": "Katakana", "value": 159 }, { "name": "F1", "value": 160 }, { "name": "F2", "value": 161 }, { "name": "F3", "value": 162 }, { "name": "F4", "value": 163 }, { "name": "F5", "value": 164 }, { "name": "F6", "value": 165 }, { "name": "F7", "value": 166 }, { "name": "F8", "value": 167 }, { "name": "F9", "value": 168 }, { "name": "F10", "value": 169 }, { "name": "F11", "value": 170 }, { "name": "F12", "value": 171 }, { "name": "F13", "value": 172 }, { "name": "F14", "value": 173 }, { "name": "F15", "value": 174 }, { "name": "F16", "value": 175 }, { "name": "F17", "value": 176 }, { "name": "F18", "value": 177 }, { "name": "F19", "value": 178 }, { "name": "F20", "value": 179 }, { "name": "F21", "value": 180 }, { "name": "F22", "value": 181 }, { "name": "F23", "value": 182 }, { "name": "F24", "value": 183 }, { "name": "F25", "value": 184 }, { "name": "F26", "value": 185 }, { "name": "F27", "value": 186 }, { "name": "F28", "value": 187 }, { "name": "F29", "value": 188 }, { "name": "F30", "value": 189 }, { "name": "F31", "value": 190 }, { "name": "F32", "value": 191 }, { "name": "F33", "value": 192 }, { "name": "F34", "value": 193 }, { "name": "F35", "value": 194 }]
+    },
+    {
+      "name": "NamedKey",
+      "docs": "A named logical key, by its `KeyboardEvent.key` name.",
+      "variants": [{ "name": "Unrecognized", "value": 0 }, { "name": "Alt", "value": 1 }, { "name": "AltGraph", "value": 2 }, { "name": "CapsLock", "value": 3 }, { "name": "Control", "value": 4 }, { "name": "Fn", "value": 5 }, { "name": "FnLock", "value": 6 }, { "name": "NumLock", "value": 7 }, { "name": "ScrollLock", "value": 8 }, { "name": "Shift", "value": 9 }, { "name": "Symbol", "value": 10 }, { "name": "SymbolLock", "value": 11 }, { "name": "Meta", "value": 12 }, { "name": "Hyper", "value": 13 }, { "name": "Super", "value": 14 }, { "name": "Enter", "value": 15 }, { "name": "Tab", "value": 16 }, { "name": "Space", "value": 17 }, { "name": "ArrowDown", "value": 18 }, { "name": "ArrowLeft", "value": 19 }, { "name": "ArrowRight", "value": 20 }, { "name": "ArrowUp", "value": 21 }, { "name": "End", "value": 22 }, { "name": "Home", "value": 23 }, { "name": "PageDown", "value": 24 }, { "name": "PageUp", "value": 25 }, { "name": "Backspace", "value": 26 }, { "name": "Clear", "value": 27 }, { "name": "Copy", "value": 28 }, { "name": "CrSel", "value": 29 }, { "name": "Cut", "value": 30 }, { "name": "Delete", "value": 31 }, { "name": "EraseEof", "value": 32 }, { "name": "ExSel", "value": 33 }, { "name": "Insert", "value": 34 }, { "name": "Paste", "value": 35 }, { "name": "Redo", "value": 36 }, { "name": "Undo", "value": 37 }, { "name": "Accept", "value": 38 }, { "name": "Again", "value": 39 }, { "name": "Attn", "value": 40 }, { "name": "Cancel", "value": 41 }, { "name": "ContextMenu", "value": 42 }, { "name": "Escape", "value": 43 }, { "name": "Execute", "value": 44 }, { "name": "Find", "value": 45 }, { "name": "Help", "value": 46 }, { "name": "Pause", "value": 47 }, { "name": "Play", "value": 48 }, { "name": "Props", "value": 49 }, { "name": "Select", "value": 50 }, { "name": "ZoomIn", "value": 51 }, { "name": "ZoomOut", "value": 52 }, { "name": "BrightnessDown", "value": 53 }, { "name": "BrightnessUp", "value": 54 }, { "name": "Eject", "value": 55 }, { "name": "LogOff", "value": 56 }, { "name": "Power", "value": 57 }, { "name": "PowerOff", "value": 58 }, { "name": "PrintScreen", "value": 59 }, { "name": "Hibernate", "value": 60 }, { "name": "Standby", "value": 61 }, { "name": "WakeUp", "value": 62 }, { "name": "AllCandidates", "value": 63 }, { "name": "Alphanumeric", "value": 64 }, { "name": "CodeInput", "value": 65 }, { "name": "Compose", "value": 66 }, { "name": "Convert", "value": 67 }, { "name": "FinalMode", "value": 68 }, { "name": "GroupFirst", "value": 69 }, { "name": "GroupLast", "value": 70 }, { "name": "GroupNext", "value": 71 }, { "name": "GroupPrevious", "value": 72 }, { "name": "ModeChange", "value": 73 }, { "name": "NextCandidate", "value": 74 }, { "name": "NonConvert", "value": 75 }, { "name": "PreviousCandidate", "value": 76 }, { "name": "Process", "value": 77 }, { "name": "SingleCandidate", "value": 78 }, { "name": "HangulMode", "value": 79 }, { "name": "HanjaMode", "value": 80 }, { "name": "JunjaMode", "value": 81 }, { "name": "Eisu", "value": 82 }, { "name": "Hankaku", "value": 83 }, { "name": "Hiragana", "value": 84 }, { "name": "HiraganaKatakana", "value": 85 }, { "name": "KanaMode", "value": 86 }, { "name": "KanjiMode", "value": 87 }, { "name": "Katakana", "value": 88 }, { "name": "Romaji", "value": 89 }, { "name": "Zenkaku", "value": 90 }, { "name": "ZenkakuHankaku", "value": 91 }, { "name": "Soft1", "value": 92 }, { "name": "Soft2", "value": 93 }, { "name": "Soft3", "value": 94 }, { "name": "Soft4", "value": 95 }, { "name": "ChannelDown", "value": 96 }, { "name": "ChannelUp", "value": 97 }, { "name": "Close", "value": 98 }, { "name": "MailForward", "value": 99 }, { "name": "MailReply", "value": 100 }, { "name": "MailSend", "value": 101 }, { "name": "MediaClose", "value": 102 }, { "name": "MediaFastForward", "value": 103 }, { "name": "MediaPause", "value": 104 }, { "name": "MediaPlay", "value": 105 }, { "name": "MediaPlayPause", "value": 106 }, { "name": "MediaRecord", "value": 107 }, { "name": "MediaRewind", "value": 108 }, { "name": "MediaStop", "value": 109 }, { "name": "MediaTrackNext", "value": 110 }, { "name": "MediaTrackPrevious", "value": 111 }, { "name": "New", "value": 112 }, { "name": "Open", "value": 113 }, { "name": "Print", "value": 114 }, { "name": "Save", "value": 115 }, { "name": "SpellCheck", "value": 116 }, { "name": "Key11", "value": 117 }, { "name": "Key12", "value": 118 }, { "name": "AudioBalanceLeft", "value": 119 }, { "name": "AudioBalanceRight", "value": 120 }, { "name": "AudioBassBoostDown", "value": 121 }, { "name": "AudioBassBoostToggle", "value": 122 }, { "name": "AudioBassBoostUp", "value": 123 }, { "name": "AudioFaderFront", "value": 124 }, { "name": "AudioFaderRear", "value": 125 }, { "name": "AudioSurroundModeNext", "value": 126 }, { "name": "AudioTrebleDown", "value": 127 }, { "name": "AudioTrebleUp", "value": 128 }, { "name": "AudioVolumeDown", "value": 129 }, { "name": "AudioVolumeUp", "value": 130 }, { "name": "AudioVolumeMute", "value": 131 }, { "name": "MicrophoneToggle", "value": 132 }, { "name": "MicrophoneVolumeDown", "value": 133 }, { "name": "MicrophoneVolumeUp", "value": 134 }, { "name": "MicrophoneVolumeMute", "value": 135 }, { "name": "SpeechCorrectionList", "value": 136 }, { "name": "SpeechInputToggle", "value": 137 }, { "name": "LaunchApplication1", "value": 138 }, { "name": "LaunchApplication2", "value": 139 }, { "name": "LaunchCalendar", "value": 140 }, { "name": "LaunchContacts", "value": 141 }, { "name": "LaunchMail", "value": 142 }, { "name": "LaunchMediaPlayer", "value": 143 }, { "name": "LaunchMusicPlayer", "value": 144 }, { "name": "LaunchPhone", "value": 145 }, { "name": "LaunchScreenSaver", "value": 146 }, { "name": "LaunchSpreadsheet", "value": 147 }, { "name": "LaunchWebBrowser", "value": 148 }, { "name": "LaunchWebCam", "value": 149 }, { "name": "LaunchWordProcessor", "value": 150 }, { "name": "BrowserBack", "value": 151 }, { "name": "BrowserFavorites", "value": 152 }, { "name": "BrowserForward", "value": 153 }, { "name": "BrowserHome", "value": 154 }, { "name": "BrowserRefresh", "value": 155 }, { "name": "BrowserSearch", "value": 156 }, { "name": "BrowserStop", "value": 157 }, { "name": "AppSwitch", "value": 158 }, { "name": "Call", "value": 159 }, { "name": "Camera", "value": 160 }, { "name": "CameraFocus", "value": 161 }, { "name": "EndCall", "value": 162 }, { "name": "GoBack", "value": 163 }, { "name": "GoHome", "value": 164 }, { "name": "HeadsetHook", "value": 165 }, { "name": "LastNumberRedial", "value": 166 }, { "name": "Notification", "value": 167 }, { "name": "MannerMode", "value": 168 }, { "name": "VoiceDial", "value": 169 }, { "name": "TV", "value": 170 }, { "name": "TV3DMode", "value": 171 }, { "name": "TVAntennaCable", "value": 172 }, { "name": "TVAudioDescription", "value": 173 }, { "name": "TVAudioDescriptionMixDown", "value": 174 }, { "name": "TVAudioDescriptionMixUp", "value": 175 }, { "name": "TVContentsMenu", "value": 176 }, { "name": "TVDataService", "value": 177 }, { "name": "TVInput", "value": 178 }, { "name": "TVInputComponent1", "value": 179 }, { "name": "TVInputComponent2", "value": 180 }, { "name": "TVInputComposite1", "value": 181 }, { "name": "TVInputComposite2", "value": 182 }, { "name": "TVInputHDMI1", "value": 183 }, { "name": "TVInputHDMI2", "value": 184 }, { "name": "TVInputHDMI3", "value": 185 }, { "name": "TVInputHDMI4", "value": 186 }, { "name": "TVInputVGA1", "value": 187 }, { "name": "TVMediaContext", "value": 188 }, { "name": "TVNetwork", "value": 189 }, { "name": "TVNumberEntry", "value": 190 }, { "name": "TVPower", "value": 191 }, { "name": "TVRadioService", "value": 192 }, { "name": "TVSatellite", "value": 193 }, { "name": "TVSatelliteBS", "value": 194 }, { "name": "TVSatelliteCS", "value": 195 }, { "name": "TVSatelliteToggle", "value": 196 }, { "name": "TVTerrestrialAnalog", "value": 197 }, { "name": "TVTerrestrialDigital", "value": 198 }, { "name": "TVTimer", "value": 199 }, { "name": "AVRInput", "value": 200 }, { "name": "AVRPower", "value": 201 }, { "name": "ColorF0Red", "value": 202 }, { "name": "ColorF1Green", "value": 203 }, { "name": "ColorF2Yellow", "value": 204 }, { "name": "ColorF3Blue", "value": 205 }, { "name": "ColorF4Grey", "value": 206 }, { "name": "ColorF5Brown", "value": 207 }, { "name": "ClosedCaptionToggle", "value": 208 }, { "name": "Dimmer", "value": 209 }, { "name": "DisplaySwap", "value": 210 }, { "name": "DVR", "value": 211 }, { "name": "Exit", "value": 212 }, { "name": "FavoriteClear0", "value": 213 }, { "name": "FavoriteClear1", "value": 214 }, { "name": "FavoriteClear2", "value": 215 }, { "name": "FavoriteClear3", "value": 216 }, { "name": "FavoriteRecall0", "value": 217 }, { "name": "FavoriteRecall1", "value": 218 }, { "name": "FavoriteRecall2", "value": 219 }, { "name": "FavoriteRecall3", "value": 220 }, { "name": "FavoriteStore0", "value": 221 }, { "name": "FavoriteStore1", "value": 222 }, { "name": "FavoriteStore2", "value": 223 }, { "name": "FavoriteStore3", "value": 224 }, { "name": "Guide", "value": 225 }, { "name": "GuideNextDay", "value": 226 }, { "name": "GuidePreviousDay", "value": 227 }, { "name": "Info", "value": 228 }, { "name": "InstantReplay", "value": 229 }, { "name": "Link", "value": 230 }, { "name": "ListProgram", "value": 231 }, { "name": "LiveContent", "value": 232 }, { "name": "Lock", "value": 233 }, { "name": "MediaApps", "value": 234 }, { "name": "MediaAudioTrack", "value": 235 }, { "name": "MediaLast", "value": 236 }, { "name": "MediaSkipBackward", "value": 237 }, { "name": "MediaSkipForward", "value": 238 }, { "name": "MediaStepBackward", "value": 239 }, { "name": "MediaStepForward", "value": 240 }, { "name": "MediaTopMenu", "value": 241 }, { "name": "NavigateIn", "value": 242 }, { "name": "NavigateNext", "value": 243 }, { "name": "NavigateOut", "value": 244 }, { "name": "NavigatePrevious", "value": 245 }, { "name": "NextFavoriteChannel", "value": 246 }, { "name": "NextUserProfile", "value": 247 }, { "name": "OnDemand", "value": 248 }, { "name": "Pairing", "value": 249 }, { "name": "PinPDown", "value": 250 }, { "name": "PinPMove", "value": 251 }, { "name": "PinPToggle", "value": 252 }, { "name": "PinPUp", "value": 253 }, { "name": "PlaySpeedDown", "value": 254 }, { "name": "PlaySpeedReset", "value": 255 }, { "name": "PlaySpeedUp", "value": 256 }, { "name": "RandomToggle", "value": 257 }, { "name": "RcLowBattery", "value": 258 }, { "name": "RecordSpeedNext", "value": 259 }, { "name": "RfBypass", "value": 260 }, { "name": "ScanChannelsToggle", "value": 261 }, { "name": "ScreenModeNext", "value": 262 }, { "name": "Settings", "value": 263 }, { "name": "SplitScreenToggle", "value": 264 }, { "name": "STBInput", "value": 265 }, { "name": "STBPower", "value": 266 }, { "name": "Subtitle", "value": 267 }, { "name": "Teletext", "value": 268 }, { "name": "VideoModeNext", "value": 269 }, { "name": "Wink", "value": 270 }, { "name": "ZoomToggle", "value": 271 }, { "name": "F1", "value": 272 }, { "name": "F2", "value": 273 }, { "name": "F3", "value": 274 }, { "name": "F4", "value": 275 }, { "name": "F5", "value": 276 }, { "name": "F6", "value": 277 }, { "name": "F7", "value": 278 }, { "name": "F8", "value": 279 }, { "name": "F9", "value": 280 }, { "name": "F10", "value": 281 }, { "name": "F11", "value": 282 }, { "name": "F12", "value": 283 }, { "name": "F13", "value": 284 }, { "name": "F14", "value": 285 }, { "name": "F15", "value": 286 }, { "name": "F16", "value": 287 }, { "name": "F17", "value": 288 }, { "name": "F18", "value": 289 }, { "name": "F19", "value": 290 }, { "name": "F20", "value": 291 }, { "name": "F21", "value": 292 }, { "name": "F22", "value": 293 }, { "name": "F23", "value": 294 }, { "name": "F24", "value": 295 }, { "name": "F25", "value": 296 }, { "name": "F26", "value": 297 }, { "name": "F27", "value": 298 }, { "name": "F28", "value": 299 }, { "name": "F29", "value": 300 }, { "name": "F30", "value": 301 }, { "name": "F31", "value": 302 }, { "name": "F32", "value": 303 }, { "name": "F33", "value": 304 }, { "name": "F34", "value": 305 }, { "name": "F35", "value": 306 }]
+    },
+    {
+      "name": "CursorIcon",
+      "variants": [{ "name": "Default", "value": 0 }, { "name": "ContextMenu", "value": 1 }, { "name": "Help", "value": 2 }, { "name": "Pointer", "value": 3 }, { "name": "Progress", "value": 4 }, { "name": "Wait", "value": 5 }, { "name": "Cell", "value": 6 }, { "name": "Crosshair", "value": 7 }, { "name": "Text", "value": 8 }, { "name": "VerticalText", "value": 9 }, { "name": "Alias", "value": 10 }, { "name": "Copy", "value": 11 }, { "name": "Move", "value": 12 }, { "name": "NoDrop", "value": 13 }, { "name": "NotAllowed", "value": 14 }, { "name": "Grab", "value": 15 }, { "name": "Grabbing", "value": 16 }, { "name": "EResize", "value": 17 }, { "name": "NResize", "value": 18 }, { "name": "NeResize", "value": 19 }, { "name": "NwResize", "value": 20 }, { "name": "SResize", "value": 21 }, { "name": "SeResize", "value": 22 }, { "name": "SwResize", "value": 23 }, { "name": "WResize", "value": 24 }, { "name": "EwResize", "value": 25 }, { "name": "NsResize", "value": 26 }, { "name": "NeswResize", "value": 27 }, { "name": "NwseResize", "value": 28 }, { "name": "ColResize", "value": 29 }, { "name": "RowResize", "value": 30 }, { "name": "AllScroll", "value": 31 }, { "name": "ZoomIn", "value": 32 }, { "name": "ZoomOut", "value": 33 }, { "name": "DndAsk", "value": 34 }, { "name": "AllResize", "value": 35 }]
+    }
+  ],
+  "tagged": [
+    {
+      "name": "MouseButton",
+      "cases": [
+        { "name": "Left", "fields": [] },
+        { "name": "Right", "fields": [] },
+        { "name": "Middle", "fields": [] },
+        { "name": "Back", "fields": [] },
+        { "name": "Forward", "fields": [] },
+        { "name": "Other", "fields": [{ "name": "button", "type": "i32" }] }
+      ]
+    },
+    {
+      "name": "MouseScrollDelta",
+      "docs": "Lines and rows of text, or pixels. Positive `y` scrolls the content\ndown the window, as winit reports.",
+      "cases": [
+        { "name": "LineDelta", "fields": [{ "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }] },
+        { "name": "PixelDelta", "fields": [{ "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }] }
+      ]
+    },
+    {
+      "name": "OptionalText",
+      "docs": "Text, or none, which is not the same as empty.",
+      "cases": [
+        { "name": "None", "fields": [] },
+        { "name": "Some", "fields": [{ "name": "text", "type": "str" }] }
+      ]
+    },
+    {
+      "name": "OptionalBytes",
+      "docs": "Bytes, or none, which is not the same as empty.",
+      "cases": [
+        { "name": "None", "fields": [] },
+        { "name": "Some", "fields": [{ "name": "bytes", "type": "bytes" }] }
+      ]
+    },
+    {
+      "name": "OptionalFloat",
+      "cases": [
+        { "name": "None", "fields": [] },
+        { "name": "Some", "fields": [{ "name": "value", "type": "f64" }] }
+      ]
+    },
+    {
+      "name": "CursorRange",
+      "docs": "UTF-8 byte offsets of an IME's cursor in its text.",
+      "cases": [
+        { "name": "None", "fields": [] },
+        { "name": "Range", "fields": [{ "name": "start", "type": "i64" }, { "name": "end", "type": "i64" }] }
+      ]
+    },
+    {
+      "name": "Ime",
+      "cases": [
+        { "name": "Enabled", "fields": [] },
+        { "name": "Preedit", "fields": [{ "name": "text", "type": "str" }, { "name": "cursor", "type": "CursorRange" }] },
+        { "name": "Commit", "fields": [{ "name": "text", "type": "str" }] },
+        { "name": "Disabled", "fields": [] }
+      ]
+    },
+    {
+      "name": "FilePath",
+      "docs": "A path as Unicode when it is; otherwise its exact bytes: a Unix path's,\nor a Windows path's UTF-16 code units, little-endian. In a page, a\ndropped file's name.",
+      "cases": [
+        { "name": "Utf8", "fields": [{ "name": "path", "type": "str" }] },
+        { "name": "UnixBytes", "fields": [{ "name": "bytes", "type": "bytes" }] },
+        { "name": "WindowsWide", "fields": [{ "name": "utf16le", "type": "bytes" }] }
+      ]
+    },
+    {
+      "name": "TouchForce",
+      "cases": [
+        { "name": "None", "fields": [] },
+        { "name": "Calibrated", "fields": [{ "name": "force", "type": "f64" }, { "name": "max_possible_force", "type": "f64" }, { "name": "altitude_angle", "type": "OptionalFloat" }] },
+        { "name": "Normalized", "fields": [{ "name": "force", "type": "f64" }] }
+      ]
+    },
+    {
+      "name": "NativeKeyCode",
+      "docs": "A platform's code for a physical key winit does not name.",
+      "cases": [
+        { "name": "Unidentified", "fields": [] },
+        { "name": "Android", "fields": [{ "name": "code", "type": "i64" }] },
+        { "name": "MacOS", "fields": [{ "name": "code", "type": "i32" }] },
+        { "name": "Windows", "fields": [{ "name": "code", "type": "i32" }] },
+        { "name": "Xkb", "fields": [{ "name": "code", "type": "i64" }] }
+      ]
+    },
+    {
+      "name": "NativeKey",
+      "docs": "A platform's code or name for a logical key winit does not name.",
+      "cases": [
+        { "name": "Unidentified", "fields": [] },
+        { "name": "Android", "fields": [{ "name": "code", "type": "i64" }] },
+        { "name": "MacOS", "fields": [{ "name": "code", "type": "i32" }] },
+        { "name": "Windows", "fields": [{ "name": "code", "type": "i32" }] },
+        { "name": "Xkb", "fields": [{ "name": "code", "type": "i64" }] },
+        { "name": "Web", "fields": [{ "name": "key", "type": "str" }] }
+      ]
+    },
+    {
+      "name": "PhysicalKey",
+      "cases": [
+        { "name": "Code", "fields": [{ "name": "code", "type": "KeyCode" }] },
+        { "name": "Unidentified", "fields": [{ "name": "code", "type": "NativeKeyCode" }] }
+      ]
+    },
+    {
+      "name": "Key",
+      "cases": [
+        { "name": "Named", "fields": [{ "name": "key", "type": "NamedKey" }] },
+        { "name": "Character", "fields": [{ "name": "text", "type": "str" }] },
+        { "name": "Unidentified", "fields": [{ "name": "key", "type": "NativeKey" }] },
+        { "name": "Dead", "fields": [{ "name": "character", "type": "OptionalText" }] }
+      ]
+    },
+    {
+      "name": "KeySupplement",
+      "docs": "What the key would be without modifiers, and the text it types with all\nof them, where the platform says.",
+      "cases": [
+        { "name": "Unavailable", "fields": [] },
+        { "name": "Supplement", "fields": [{ "name": "key_without_modifiers", "type": "Key" }, { "name": "text_with_all_modifiers", "type": "OptionalText" }] }
+      ]
+    },
+    {
+      "name": "KeyEvent",
+      "cases": [
+        { "name": "Input", "fields": [{ "name": "physical_key", "type": "PhysicalKey" }, { "name": "logical_key", "type": "Key" }, { "name": "text", "type": "OptionalText" }, { "name": "location", "type": "KeyLocation" }, { "name": "state", "type": "MouseElementState" }, { "name": "repeat", "type": "bool" }, { "name": "supplement", "type": "KeySupplement" }] }
+      ]
+    },
+    {
+      "name": "Modifiers",
+      "docs": "The modifiers in effect, and which side of each is held.",
+      "cases": [
+        { "name": "State", "fields": [{ "name": "shift", "type": "bool" }, { "name": "control", "type": "bool" }, { "name": "alt", "type": "bool" }, { "name": "super_key", "type": "bool" }, { "name": "left_shift", "type": "ModifiersKeyState" }, { "name": "right_shift", "type": "ModifiersKeyState" }, { "name": "left_control", "type": "ModifiersKeyState" }, { "name": "right_control", "type": "ModifiersKeyState" }, { "name": "left_alt", "type": "ModifiersKeyState" }, { "name": "right_alt", "type": "ModifiersKeyState" }, { "name": "left_super", "type": "ModifiersKeyState" }, { "name": "right_super", "type": "ModifiersKeyState" }] }
+      ]
+    },
+    {
+      "name": "DeviceEvent",
+      "docs": "A device's raw input, whichever window has focus.",
+      "cases": [
+        { "name": "Added", "fields": [] },
+        { "name": "Removed", "fields": [] },
+        { "name": "MouseMotion", "fields": [{ "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }] },
+        { "name": "MouseWheel", "fields": [{ "name": "delta", "type": "MouseScrollDelta" }] },
+        { "name": "Motion", "fields": [{ "name": "axis", "type": "i64" }, { "name": "value", "type": "f64" }] },
+        { "name": "Button", "fields": [{ "name": "button", "type": "i64" }, { "name": "state", "type": "MouseElementState" }] },
+        { "name": "Key", "fields": [{ "name": "physical_key", "type": "PhysicalKey" }, { "name": "state", "type": "MouseElementState" }] }
+      ]
+    },
+    {
+      "name": "Event",
+      "docs": "What `Window.poll` and `Window.wait` return: the next event, or `None`.\n`device_id` is a positive id per input device. Raw device events go to\nthe focused window, or the first one open when none has focus.",
+      "cases": [
+        { "name": "None", "fields": [] },
+        { "name": "Closed", "fields": [] },
+        { "name": "Destroyed", "fields": [] },
+        { "name": "Resized", "fields": [{ "name": "width", "type": "i64" }, { "name": "height", "type": "i64" }] },
+        { "name": "Moved", "fields": [{ "name": "x", "type": "i32" }, { "name": "y", "type": "i32" }] },
+        { "name": "Focused", "fields": [{ "name": "focused", "type": "bool" }] },
+        { "name": "Occluded", "fields": [{ "name": "occluded", "type": "bool" }] },
+        { "name": "ScaleFactorChanged", "fields": [{ "name": "scale_factor", "type": "f64" }] },
+        { "name": "ThemeChanged", "fields": [{ "name": "theme", "type": "Theme" }] },
+        { "name": "RedrawRequested", "fields": [] },
+        { "name": "CursorEntered", "fields": [{ "name": "device_id", "type": "i32" }] },
+        { "name": "CursorLeft", "fields": [{ "name": "device_id", "type": "i32" }] },
+        { "name": "CursorMoved", "fields": [{ "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }, { "name": "device_id", "type": "i32" }] },
+        { "name": "MouseInput", "fields": [{ "name": "state", "type": "MouseElementState" }, { "name": "button", "type": "MouseButton" }, { "name": "device_id", "type": "i32" }] },
+        { "name": "MouseWheel", "fields": [{ "name": "delta", "type": "MouseScrollDelta" }, { "name": "phase", "type": "TouchPhase" }, { "name": "device_id", "type": "i32" }] },
+        { "name": "KeyboardInput", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "event", "type": "KeyEvent" }, { "name": "is_synthetic", "type": "bool" }] },
+        { "name": "ModifiersChanged", "fields": [{ "name": "modifiers", "type": "Modifiers" }] },
+        { "name": "Ime", "fields": [{ "name": "event", "type": "Ime" }] },
+        { "name": "DroppedFile", "fields": [{ "name": "path", "type": "FilePath" }] },
+        { "name": "HoveredFile", "fields": [{ "name": "path", "type": "FilePath" }] },
+        { "name": "HoveredFileCancelled", "fields": [] },
+        { "name": "PinchGesture", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "delta", "type": "f64" }, { "name": "phase", "type": "TouchPhase" }] },
+        { "name": "PanGesture", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }, { "name": "phase", "type": "TouchPhase" }] },
+        { "name": "DoubleTapGesture", "fields": [{ "name": "device_id", "type": "i32" }] },
+        { "name": "RotationGesture", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "delta", "type": "f64" }, { "name": "phase", "type": "TouchPhase" }] },
+        { "name": "TouchpadPressure", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "pressure", "type": "f64" }, { "name": "stage", "type": "i64" }] },
+        { "name": "AxisMotion", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "axis", "type": "i64" }, { "name": "value", "type": "f64" }] },
+        { "name": "Touch", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "phase", "type": "TouchPhase" }, { "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }, { "name": "force", "type": "TouchForce" }, { "name": "id", "type": "i64" }] },
+        { "name": "ActivationTokenDone", "fields": [{ "name": "serial", "type": "i64" }, { "name": "token", "type": "str" }] },
+        { "name": "Device", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "event", "type": "DeviceEvent" }] },
+        { "name": "Resumed", "fields": [] },
+        { "name": "Suspended", "fields": [] },
+        { "name": "MemoryWarning", "fields": [] },
+        { "name": "Paste", "fields": [] }
+      ]
+    },
+    {
+      "name": "GamepadEvent",
+      "docs": "One application-wide queue, independent of window event queues.",
+      "cases": [
+        { "name": "None", "fields": [] },
+        { "name": "Connected", "fields": [{ "name": "device_id", "type": "i32" }] },
+        { "name": "Disconnected", "fields": [{ "name": "device_id", "type": "i32" }] },
+        { "name": "Button", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "button", "type": "GamepadButton" }, { "name": "value", "type": "f64" }, { "name": "pressed", "type": "bool" }] },
+        { "name": "Axis", "fields": [{ "name": "device_id", "type": "i32" }, { "name": "axis", "type": "GamepadAxis" }, { "name": "value", "type": "f64" }] },
+        { "name": "Overflow", "fields": [{ "name": "dropped", "type": "i64" }] }
+      ]
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "WindowAttributes",
+      "docs": "What a window opens with; whatever is left unset is the platform's\ndefault. Sizes and positions are logical.",
+      "methods": [
+        {
+          "name": "title",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "str" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "width",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "height",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "min_width",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "min_height",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "max_width",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "max_height",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "x",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "y",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "resizable",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "maximized",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "visible",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "decorations",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "transparent",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "blur",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "has_shadow",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "blur_radius",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "content_protected",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "fullscreen",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "active",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "window_level",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "WindowLevel" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "theme",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "Theme" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "scale_sizing",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "ScaleSizing" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "icon",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bytes" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "icon_width",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "icon_height",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "resize_increment_width",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "resize_increment_height",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "close_button",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "minimize_button",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "maximize_button",
+          "kind": "mutating",
+          "params": [{ "name": "value", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "new",
+          "kind": "constructor",
+          "params": [],
+          "returns": "WindowAttributes",
+          "fallible": true,
+          "blocking": false
+        }
+      ]
+    },
+    {
+      "name": "Window",
+      "methods": [
+        {
+          "name": "open",
+          "docs": "A new window; one whose `valid` is false when the platform refuses.",
+          "kind": "static",
+          "params": [{ "name": "attributes", "type": "WindowAttributes" }],
+          "returns": "Window",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "valid",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "listen_device_events",
+          "docs": "When raw device events come, for every window: by default only while\none of the program's windows has focus.",
+          "kind": "static",
+          "params": [{ "name": "when", "type": "DeviceEvents" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "clipboard_text",
+          "docs": "The clipboard's text: none when it holds no text, no window is open,\nor the platform has no clipboard to read, as a page cannot.",
+          "kind": "static",
+          "params": [],
+          "returns": "OptionalText",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_clipboard_text",
+          "docs": "Puts text on the clipboard; nothing happens with no window open.",
+          "kind": "static",
+          "params": [{ "name": "text", "type": "str" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "clipboard_type_count",
+          "docs": "How many types the clipboard holds now; `clipboardType` names each,\nbest first, as a MIME type. `text/plain` is UTF-8 text and\n`text/uri-list` a list of files.",
+          "kind": "static",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "clipboard_type",
+          "kind": "static",
+          "params": [{ "name": "index", "type": "i32" }],
+          "returns": "str",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "clipboard_data",
+          "docs": "The clipboard's bytes for a MIME type, or none when it does not hold\nit, no window is open, or the platform cannot read it.",
+          "kind": "static",
+          "params": [{ "name": "mime_type", "type": "str" }],
+          "returns": "OptionalBytes",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "poll",
+          "docs": "The next event, without waiting. It asks the platform for more only\nwhen the window has none queued and has answered none since the\nplatform was last asked, so draining with polls asks once.",
+          "kind": "method",
+          "params": [],
+          "returns": "Event",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "wait",
+          "docs": "The next event, waiting up to `timeout` seconds for one; a negative\ntimeout waits as long as it takes.",
+          "kind": "method",
+          "params": [{ "name": "timeout", "type": "f64" }],
+          "returns": "Event",
+          "fallible": true,
+          "blocking": true
+        },
+        {
+          "name": "wake",
+          "docs": "Wake the current or next wait for application work, from any thread.\nSeveral calls coalesce; no synthetic window event is produced.\nFalse if no event loop is available.",
+          "kind": "static",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "coalesce_cursor_moves",
+          "docs": "Coalesce cursor moves inside a caller-guaranteed quiet rectangle in\nphysical pixels (left/top inclusive, right/bottom exclusive). No move\nis queued there; only its latest position is retained. Crossing the\nrectangle or receiving another window event resumes ordinary delivery.\nEmpty or non-finite bounds disable coalescing. Raw device events are\nunaffected; applications using only window input can disable those.",
+          "kind": "method",
+          "params": [{ "name": "left", "type": "f64" }, { "name": "top", "type": "f64" }, { "name": "right", "type": "f64" }, { "name": "bottom", "type": "f64" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "take_cursor_move",
+          "docs": "Disable coalescing and take the latest retained CursorMoved, or None.\nCall before changing hit geometry or processing application work.\nOther window events automatically deliver that position first.",
+          "kind": "method",
+          "params": [],
+          "returns": "Event",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "close",
+          "docs": "Close the window; its handle names nothing after.",
+          "kind": "method",
+          "params": [],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "width",
+          "docs": "The content's width in physical pixels; `setSize` takes logical\nones, this over `scaleFactor`.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "height",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "outer_width",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "outer_height",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "x",
+          "docs": "Where the window's frame is, in physical pixels; `setPosition`\ntakes logical ones, this over `scaleFactor`.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "y",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "inner_x",
+          "docs": "Where the window's content is, without its frame.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "inner_y",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "scale_factor",
+          "kind": "method",
+          "params": [],
+          "returns": "f64",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "title",
+          "kind": "method",
+          "params": [],
+          "returns": "str",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "has_focus",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "is_visible",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "is_minimized",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "is_maximized",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "is_fullscreen",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "is_resizable",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "is_decorated",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "theme",
+          "kind": "method",
+          "params": [],
+          "returns": "Theme",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "platform",
+          "docs": "The window for a GPU surface: a platform code, and with `raw` the\nfour integers xgpu's `GpuInstance.surface` takes after it. See\nxwindow-core's `raw` for the table.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "raw",
+          "kind": "method",
+          "params": [{ "name": "which", "type": "i32" }],
+          "returns": "i64",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_title",
+          "kind": "method",
+          "params": [{ "name": "title", "type": "str" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_size",
+          "docs": "The content's size in logical pixels: `width` and `height` over\n`scaleFactor`.",
+          "kind": "method",
+          "params": [{ "name": "width", "type": "i32" }, { "name": "height", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_min_size",
+          "docs": "A size of zero by zero removes the limit.",
+          "kind": "method",
+          "params": [{ "name": "width", "type": "i32" }, { "name": "height", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_max_size",
+          "kind": "method",
+          "params": [{ "name": "width", "type": "i32" }, { "name": "height", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_position",
+          "docs": "Move the window's frame to logical pixels: `x` and `y` over\n`scaleFactor`.",
+          "kind": "method",
+          "params": [{ "name": "x", "type": "i32" }, { "name": "y", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_resizable",
+          "kind": "method",
+          "params": [{ "name": "resizable", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_minimized",
+          "kind": "method",
+          "params": [{ "name": "minimized", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_maximized",
+          "kind": "method",
+          "params": [{ "name": "maximized", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_fullscreen",
+          "kind": "method",
+          "params": [{ "name": "fullscreen", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_decorations",
+          "kind": "method",
+          "params": [{ "name": "decorations", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_visible",
+          "kind": "method",
+          "params": [{ "name": "visible", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_window_level",
+          "kind": "method",
+          "params": [{ "name": "level", "type": "WindowLevel" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_transparent",
+          "kind": "method",
+          "params": [{ "name": "transparent", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_blur",
+          "kind": "method",
+          "params": [{ "name": "blur", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_has_shadow",
+          "docs": "The system's shadow behind the window, on macOS and, for an\nundecorated window, Windows; elsewhere nothing.",
+          "kind": "method",
+          "params": [{ "name": "has_shadow", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_blur_radius",
+          "docs": "How far the background behind a transparent window is blurred, 0 for\nnone: a radius on macOS, where `setBlur` means a radius of 80, and the\nplatform's blur on or off elsewhere.",
+          "kind": "method",
+          "params": [{ "name": "radius", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_content_protected",
+          "kind": "method",
+          "params": [{ "name": "protected", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_scale_sizing",
+          "kind": "method",
+          "params": [{ "name": "sizing", "type": "ScaleSizing" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_theme",
+          "docs": "A theme, or none to follow the system's.",
+          "kind": "method",
+          "params": [{ "name": "theme", "type": "option<Theme>" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_icon",
+          "docs": "RGBA pixels, `width` by `height`; an empty buffer removes the icon.",
+          "kind": "method",
+          "params": [{ "name": "rgba", "type": "bytes" }, { "name": "width", "type": "i32" }, { "name": "height", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_resize_increments",
+          "docs": "The steps a user resizes the window by; zero by zero removes them.",
+          "kind": "method",
+          "params": [{ "name": "width", "type": "i32" }, { "name": "height", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_enabled_buttons",
+          "kind": "method",
+          "params": [{ "name": "close", "type": "bool" }, { "name": "minimize", "type": "bool" }, { "name": "maximize", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_exclusive_fullscreen",
+          "docs": "Fullscreen in a video mode of one of the window's monitors.",
+          "kind": "method",
+          "params": [{ "name": "mode", "type": "VideoMode" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "drag_window",
+          "docs": "Move the window with the pointer while a button is held, as from an\nundecorated window's title bar; whether the platform started it.",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "drag_resize_window",
+          "kind": "method",
+          "params": [{ "name": "direction", "type": "ResizeDirection" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "show_window_menu",
+          "docs": "The system's window menu, at a logical position in the window.",
+          "kind": "method",
+          "params": [{ "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "request_redraw",
+          "kind": "method",
+          "params": [],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "pre_present_notify",
+          "docs": "Call just before presenting a frame. On Wayland the next\n`RedrawRequested` then waits for the compositor's frame callback for\nthat frame, which paces drawing to the display; elsewhere it does\nnothing.",
+          "kind": "method",
+          "params": [],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "focus",
+          "kind": "method",
+          "params": [],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "request_attention",
+          "kind": "method",
+          "params": [{ "name": "attention", "type": "Attention" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_cursor_icon",
+          "kind": "method",
+          "params": [{ "name": "icon", "type": "CursorIcon" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_cursor_image",
+          "docs": "A cursor of `width` by `height` RGBA pixels, its hot spot at\n`hotX`, `hotY`.",
+          "kind": "method",
+          "params": [{ "name": "rgba", "type": "bytes" }, { "name": "width", "type": "i32" }, { "name": "height", "type": "i32" }, { "name": "hot_x", "type": "i32" }, { "name": "hot_y", "type": "i32" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_cursor_visible",
+          "kind": "method",
+          "params": [{ "name": "visible", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_cursor_grab",
+          "docs": "Whether the platform took the grab.",
+          "kind": "method",
+          "params": [{ "name": "grab", "type": "CursorGrab" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_cursor_hittest",
+          "docs": "Whether pointer input reaches the window rather than passing\nthrough it; whether the platform took the setting.",
+          "kind": "method",
+          "params": [{ "name": "hittest", "type": "bool" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_cursor_position",
+          "docs": "Whether the platform moved the cursor.",
+          "kind": "method",
+          "params": [{ "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_ime_allowed",
+          "kind": "method",
+          "params": [{ "name": "allowed", "type": "bool" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_ime_purpose",
+          "kind": "method",
+          "params": [{ "name": "purpose", "type": "ImePurpose" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "set_ime_cursor_area",
+          "kind": "method",
+          "params": [{ "name": "x", "type": "f64" }, { "name": "y", "type": "f64" }, { "name": "width", "type": "f64" }, { "name": "height", "type": "f64" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "request_activation_token",
+          "docs": "A request's serial, which its `ActivationTokenDone` carries; zero\nwhere the platform has no activation tokens.",
+          "kind": "method",
+          "params": [],
+          "returns": "i64",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "current_monitor",
+          "docs": "A monitor whose `valid` is false when there is none.",
+          "kind": "method",
+          "params": [],
+          "returns": "Monitor",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "primary_monitor",
+          "kind": "method",
+          "params": [],
+          "returns": "Monitor",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "monitor_count",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "monitor",
+          "kind": "method",
+          "params": [{ "name": "index", "type": "i32" }],
+          "returns": "Monitor",
+          "fallible": true,
+          "blocking": false
+        }
+      ]
+    },
+    {
+      "name": "ClipboardItems",
+      "docs": "Representations of one thing, by MIME type, which `write` puts on the\nclipboard together so that a reader takes the richest it understands:\n`text/plain` beside `text/html`, or `image/png` beside `text/plain`.",
+      "methods": [
+        {
+          "name": "create",
+          "kind": "static",
+          "params": [],
+          "returns": "ClipboardItems",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "add",
+          "kind": "method",
+          "params": [{ "name": "mime_type", "type": "str" }, { "name": "bytes", "type": "bytes" }],
+          "returns": "void",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "write",
+          "docs": "Replaces the clipboard's contents with the items; whether the\nplatform took them. The handle names nothing after.",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        }
+      ]
+    },
+    {
+      "name": "Monitor",
+      "docs": "A display. The same display is the same handle.",
+      "methods": [
+        {
+          "name": "valid",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "name",
+          "kind": "method",
+          "params": [],
+          "returns": "str",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "width",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "height",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "x",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "y",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "scale_factor",
+          "kind": "method",
+          "params": [],
+          "returns": "f64",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "refresh_rate",
+          "docs": "Millihertz; zero when the platform does not say.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "video_mode_count",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "video_mode",
+          "docs": "A video mode whose `valid` is false past the last.",
+          "kind": "method",
+          "params": [{ "name": "index", "type": "i32" }],
+          "returns": "VideoMode",
+          "fallible": true,
+          "blocking": false
+        }
+      ]
+    },
+    {
+      "name": "VideoMode",
+      "docs": "A size, depth and refresh rate a monitor can run at, for exclusive\nfullscreen. The same mode is the same handle.",
+      "methods": [
+        {
+          "name": "valid",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "width",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "height",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "bit_depth",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "refresh_rate",
+          "docs": "Millihertz.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "monitor",
+          "kind": "method",
+          "params": [],
+          "returns": "Monitor",
+          "fallible": true,
+          "blocking": false
+        }
+      ]
+    },
+    {
+      "name": "Gamepad",
+      "docs": "A connection-scoped controller handle; reconnecting invalidates the old handle.",
+      "methods": [
+        {
+          "name": "available",
+          "docs": "Whether the platform backend initialized, including when no controllers are connected.",
+          "kind": "static",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "error",
+          "docs": "Why the backend is unavailable, or an empty string.",
+          "kind": "static",
+          "params": [],
+          "returns": "str",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "count",
+          "kind": "static",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "at",
+          "docs": "A connected controller in enumeration order, or an invalid handle.",
+          "kind": "static",
+          "params": [{ "name": "index", "type": "i32" }],
+          "returns": "Gamepad",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "from_id",
+          "kind": "static",
+          "params": [{ "name": "device_id", "type": "i32" }],
+          "returns": "Gamepad",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "poll",
+          "kind": "static",
+          "params": [],
+          "returns": "GamepadEvent",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "drain",
+          "docs": "Drain whole 32-byte records into reused storage without constructing event objects.\nu32 kind, i32 device, u32 control, u32 pressed, f64 value, u64 dropped.\nKinds match GamepadEvent variants. Returns count; a short buffer consumes nothing.",
+          "kind": "static",
+          "params": [{ "name": "output", "type": "bytes_mut" }],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "valid",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "device_id",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "name",
+          "kind": "method",
+          "params": [],
+          "returns": "str",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "has_button",
+          "kind": "method",
+          "params": [{ "name": "button", "type": "GamepadButton" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "has_axis",
+          "kind": "method",
+          "params": [{ "name": "axis", "type": "GamepadAxis" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "button",
+          "kind": "method",
+          "params": [{ "name": "button", "type": "GamepadButton" }],
+          "returns": "f64",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "pressed",
+          "kind": "method",
+          "params": [{ "name": "button", "type": "GamepadButton" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "axis",
+          "kind": "method",
+          "params": [{ "name": "axis", "type": "GamepadAxis" }],
+          "returns": "f64",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "snapshot",
+          "docs": "Atomically copy into a reused 176-byte buffer: 17 little-endian f64 button\nvalues, 4 f64 axes, a u32 pressed mask and a u32 change sequence.\nFalse for an invalid handle or short buffer; no bytes are written then.",
+          "kind": "method",
+          "params": [{ "name": "output", "type": "bytes_mut" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "rumble_supported",
+          "kind": "method",
+          "params": [],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "rumble",
+          "docs": "Start or replace finite dual-motor rumble; zero duration stops it.\nMagnitudes are [0,1], seconds [0,5]. Reports backend acceptance.",
+          "kind": "method",
+          "params": [{ "name": "strong", "type": "f64" }, { "name": "weak", "type": "f64" }, { "name": "seconds", "type": "f64" }],
+          "returns": "bool",
+          "fallible": true,
+          "blocking": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+/target
+/Cargo.lock.bak
+# Local overrides of the git dependencies, for building against checkouts.
+/.cargo/config.toml
