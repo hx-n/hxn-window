@@ -21,7 +21,7 @@ runs:
         sudo apt-get install -y libxkbcommon-dev libxkbcommon-x11-0 libwayland-dev libx11-dev \
           libxcursor1 libxrandr2 libxi6 libudev-dev xvfb xauth
     # setup-haxe has no Haxe for arm64 macOS, which Homebrew has.
-    - if: runner.os != 'macOS'
+    - if: runner.os == 'Windows' || (runner.os == 'Linux' && runner.arch != 'ARM64')
       uses: krdlab/setup-haxe@v1
       with:
         haxe-version: 4.3.6
@@ -29,6 +29,13 @@ runs:
       shell: bash
       run: |
         brew install haxe
+        mkdir -p "$HOME/haxelib" && haxelib setup "$HOME/haxelib"
+    # setup-haxe has no Linux ARM64 build; Ubuntu packages one.
+    - if: runner.os == 'Linux' && runner.arch == 'ARM64'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y haxe
         mkdir -p "$HOME/haxelib" && haxelib setup "$HOME/haxelib"
     # From git, at a commit after HaxeFoundation/hxcpp#1298: 4.3.2 can crash
     # on Windows when a program exits right after a collection.

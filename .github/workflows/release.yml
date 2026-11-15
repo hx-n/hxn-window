@@ -15,22 +15,36 @@ defaults:
 
 jobs:
   package:
-    name: package, ${{ matrix.os }}
+    name: package, ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - { os: ubuntu-latest,    name: linux-x86_64 }
+          - { os: ubuntu-24.04-arm, name: linux-aarch64 }
+          - { os: macos-latest,     name: macos-aarch64 }
+          - { os: windows-latest,   name: windows-x86_64 }
+          # Cross-compiled static libraries: hxcpp links one into the program,
+          # and Ash links one into a HashLink program for a mobile device.
+          # GitHub has no Intel macOS runner to build an .hdll on, so Intel
+          # Macs get the hxcpp library alone.
+          - { os: macos-latest,  name: macos-x86_64,  runtimes: cpp,    target: x86_64-apple-darwin }
+          - { os: macos-latest,  name: ios,           runtimes: hl cpp, target: aarch64-apple-ios }
+          - { os: macos-latest,  name: ios-simulator, runtimes: hl cpp, target: aarch64-apple-ios-sim }
+          - { os: ubuntu-latest, name: android,       runtimes: hl cpp, target: aarch64-linux-android }
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
         with:
           runtime: package
-      - run: hxn package hl cpp --release --out package
+      - if: matrix.target
+        run: rustup target add ${{ matrix.target }}
+      - run: hxn package ${{ matrix.runtimes || 'hl cpp' }} --release ${{ matrix.target && format('--target {0}', matrix.target) || '' }} --out package
       - uses: actions/upload-artifact@v4
         with:
-          name: package-${{ matrix.os }}
+          name: package-${{ matrix.name }}
           path: package
 
   haxelib:
@@ -45,7 +59,7 @@ jobs:
       # platform adds its native/<triple>/.
       - run: |
           mkdir haxelib
-          cp -R parts/package-ubuntu-latest/. haxelib/
+          cp -R parts/package-linux-x86_64/. haxelib/
           for part in parts/*/; do
             cp -R "$part/native/." haxelib/native/
           done
@@ -69,7 +83,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -81,13 +95,19 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libxkbcommon-x11-0 libx11-6 libxcursor1 libxrandr2 libxi6 libudev-dev xvfb xauth
-      - if: runner.os != 'macOS'
+      - if: runner.os == 'Windows' || (runner.os == 'Linux' && runner.arch != 'ARM64')
         uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.3.6
       - if: runner.os == 'macOS'
         run: |
           brew install haxe
+          mkdir -p "$HOME/haxelib" && haxelib setup "$HOME/haxelib"
+      # setup-haxe has no Linux ARM64 build; Ubuntu packages one.
+      - if: runner.os == 'Linux' && runner.arch == 'ARM64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y haxe
           mkdir -p "$HOME/haxelib" && haxelib setup "$HOME/haxelib"
       # The hxn haxelib the package depends on comes from haxelib with it.
       - name: Install the haxelib and hxcpp
@@ -100,7 +120,7 @@ jobs:
       - name: Install Ash
         run: |
           case "$RUNNER_OS" in
-            Linux) archive=ash-linux-x86_64.tar.gz ;;
+            Linux) archive=ash-linux-$([ "$RUNNER_ARCH" = ARM64 ] && echo aarch64 || echo x86_64).tar.gz ;;
             macOS) archive=ash-macos-aarch64.tar.gz ;;
             Windows) archive=ash-windows-x86_64.tar.gz ;;
           esac
