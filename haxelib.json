@@ -4,7 +4,7 @@
   "description": "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering",
   "url": "https://github.com/hx-n/hxn-window",
   "license": "Apache",
-  "tags": ["window", "input", "haxe"],
+  "tags": ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering"],
   "contributors": ["darmie", "rayzor"],
   "releasenote": "First release: windows, input, monitors, gamepads and surface handles on HashLink, Ash, hxcpp and CPPIA.",
   "dependencies": { "hxn": "0.3.1" }
