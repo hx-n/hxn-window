@@ -49,7 +49,9 @@ haxe -lib hxn-window -main Main -cpp out
 ```
 
 The haxelib contains the generated classes and prebuilt native libraries for
-Linux x86-64, macOS arm64 and Windows x86-64, so a program needs no Rust. For
+Linux x86-64 and ARM64, macOS arm64 and Windows x86-64, and as static
+libraries for Intel macOS (hxcpp only), iOS, the iOS simulator and Android
+arm64, so a program needs no Rust. For
 HashLink, the native library is copied next to the `.hl` output at compile
 time. On Linux, hxcpp links against libudev for gamepads: install
 `libudev-dev`. Each GitHub release also has the haxelib as a ZIP, which
@@ -60,7 +62,9 @@ be read here, but the native libraries are only in releases: a `haxelib git`
 install compiles once a release's `native/` directory is copied into it.
 
 CI runs each runtime on Linux, macOS and Windows, except HashLink, which runs
-on Linux and Windows. Android, iOS and wasm builds are not set up yet.
+on Linux and Windows. The release builds the iOS and Android libraries, and
+CI does not run them; wasm is not set up yet. On a mobile device, hxcpp links
+the static library into the program, and so does Ash for a HashLink program.
 
 ## Classes
 

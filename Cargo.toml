@@ -1,6 +1,6 @@
 [package]
 name = "hxn-window"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering"
 repository = "https://github.com/hx-n/hxn-window"
@@ -16,7 +16,7 @@ name = "hxn_window"
 library = "xwindow"
 haxelib = "hxn-window"
 contributors = ["darmie", "rayzor"]
-releasenote = "First release: windows, input, monitors, gamepads and surface handles on HashLink, Ash, hxcpp and CPPIA."
+releasenote = "Prebuilt native libraries for Linux ARM64, Intel macOS (hxcpp), iOS, the iOS simulator and Android arm64, beside Linux x86-64, macOS arm64 and Windows x86-64; an agent skill under skills/."
 # The headless-window test `hxn check` and `hxn run` build.
 haxe = "examples/headless"
 
