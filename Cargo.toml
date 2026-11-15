@@ -5,7 +5,7 @@ edition = "2024"
 description = "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering"
 repository = "https://github.com/hx-n/hxn-window"
 license = "Apache-2.0"
-keywords = ["window", "input", "haxe"]
+keywords = ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering"]
 
 [lib]
 name = "hxn_window"
