@@ -118,6 +118,11 @@ To build against checkouts of hxn, x-idl and xwindow beside this one, put
 `[patch]` tables for their git URLs in `.cargo/config.toml`, which git
 ignores.
 
+## Agent skill
+
+[`skills/hxn-window/SKILL.md`](https://github.com/hx-n/hxn-window/blob/main/skills/hxn-window/SKILL.md) describes the library for coding
+agents. The haxelib includes it.
+
 ## License
 
 Apache-2.0. xwindow and x-idl are MIT.
