@@ -7,7 +7,7 @@ fn main() {
     xwindow_backend::install_scoped(&out, "crate::model").expect("installing the xwindow backend");
     let binding = x_idl::hxn::generate(
         xwindow_bindgen::NAMESPACE,
-        "window",
+        "hxn.window",
         xwindow_bindgen::window_api(),
         &xwindow_bindgen::browser_idl(),
     )

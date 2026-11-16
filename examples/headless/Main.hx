@@ -1,6 +1,6 @@
-import window.Theme;
-import window.Window;
-import window.WindowAttributes;
+import hxn.window.Theme;
+import hxn.window.Window;
+import hxn.window.WindowAttributes;
 
 /**
 	Opens a headless window, reads its properties back, polls its events

@@ -1,11 +1,11 @@
 {
   "name": "hxn-window",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering",
   "url": "https://github.com/hx-n/hxn-window",
   "license": "Apache",
   "tags": ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering"],
   "contributors": ["darmie", "rayzor"],
-  "releasenote": "Depends on hxn 0.3.2, as the GPU drivers do, so one program can use them together.",
-  "dependencies": { "hxn": "0.3.2" }
+  "releasenote": "Moves to the hxn.window package, on hxn 0.3.5.",
+  "dependencies": { "hxn": "0.3.5" }
 }

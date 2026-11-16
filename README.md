@@ -10,8 +10,8 @@ and CPPIA. The same program compiles for each runtime, and each window
 exposes its native handles for creating a GPU surface.
 
 ```haxe
-import window.Window;
-import window.WindowAttributes;
+import hxn.window.Window;
+import hxn.window.WindowAttributes;
 
 class Main {
 	static function main() {
@@ -68,7 +68,7 @@ the static library into the program, and so does Ash for a HashLink program.
 
 ## Classes
 
-All in the package `window`:
+All in the package `hxn.window`:
 
 | Class | |
 |---|---|

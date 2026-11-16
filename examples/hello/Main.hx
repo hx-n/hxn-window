@@ -1,5 +1,5 @@
-import window.Window;
-import window.WindowAttributes;
+import hxn.window.Window;
+import hxn.window.WindowAttributes;
 
 /** Opens a window and logs resizes until it is closed. **/
 class Main {

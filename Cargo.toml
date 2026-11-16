@@ -1,6 +1,6 @@
 [package]
 name = "hxn-window"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2024"
 description = "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering"
 repository = "https://github.com/hx-n/hxn-window"
@@ -16,7 +16,7 @@ name = "hxn_window"
 library = "xwindow"
 haxelib = "hxn-window"
 contributors = ["darmie", "rayzor"]
-releasenote = "Depends on hxn 0.3.2, as the GPU drivers do, so one program can use them together."
+releasenote = "Moves to the hxn.window package, on hxn 0.3.5."
 # The headless-window test `hxn check` and `hxn run` build.
 haxe = "examples/headless"
 
@@ -26,7 +26,7 @@ xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "
 xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 
 [dependencies]
-hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.2" }
+hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.5" }
 xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 xwindow-gamepad = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "0860402ebf4e212923289c137d3ec1dcaf06cc5b" }
 

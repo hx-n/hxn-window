@@ -1,7 +1,7 @@
 {
   "hxn": 1,
   "library": "xwindow",
-  "package": "window",
+  "package": "hxn.window",
   "enums": [
     {
       "name": "WindowLevel",
