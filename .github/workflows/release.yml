@@ -34,6 +34,9 @@ jobs:
           - { os: macos-latest,  name: ios,           runtimes: hl cpp, target: aarch64-apple-ios }
           - { os: macos-latest,  name: ios-simulator, runtimes: hl cpp, target: aarch64-apple-ios-sim }
           - { os: ubuntu-latest, name: android,       runtimes: hl cpp, target: aarch64-linux-android }
+          - { os: ubuntu-latest, name: ash-wasm-threads, runtimes: hl, wasm: true, threads: true }
+          - { os: ubuntu-latest, name: emcc-wasm, runtimes: cpp, wasm: true, emcc: true }
+          - { os: ubuntu-latest, name: emcc-wasm-threads, runtimes: cpp, wasm: true, threads: true, emcc: true }
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -41,7 +44,17 @@ jobs:
           runtime: package
       - if: matrix.target
         run: rustup target add ${{ matrix.target }}
-      - run: hxn package ${{ matrix.runtimes || 'hl cpp' }} --release ${{ matrix.target && format('--target {0}', matrix.target) || '' }} --out package
+      - if: matrix.wasm
+        run: rustup component add rust-src
+      - if: matrix.emcc
+        run: |
+          rustup target add wasm32-unknown-emscripten
+          git clone --depth 1 https://github.com/emscripten-core/emsdk "$RUNNER_TEMP/emsdk"
+          "$RUNNER_TEMP/emsdk/emsdk" install 5.0.7
+          "$RUNNER_TEMP/emsdk/emsdk" activate 5.0.7
+      - run: |
+          if [ -f "$RUNNER_TEMP/emsdk/emsdk_env.sh" ]; then source "$RUNNER_TEMP/emsdk/emsdk_env.sh"; fi
+          hxn package ${{ matrix.runtimes || 'hl cpp' }} --release ${{ matrix.target && format('--target {0}', matrix.target) || '' }} ${{ matrix.wasm && '--wasm' || '' }} ${{ matrix.threads && '--threads' || '' }} --out package
       - uses: actions/upload-artifact@v4
         with:
           name: package-${{ matrix.name }}
@@ -128,14 +141,18 @@ jobs:
           # Extracted in place: tar reads a Windows path's drive as a host.
           (cd "$RUNNER_TEMP/ash" && curl -fsSL "https://github.com/rayzor-blade/ash/releases/download/v0.1.18/$archive" | tar -xz)
           echo "ASH=$RUNNER_TEMP/ash/ash" >> "$GITHUB_ENV"
+      - name: Install the matching hxn CLI
+        run: |
+          version="$(python3 -c 'import json,subprocess; from pathlib import Path; root=subprocess.check_output(["haxelib","libpath","hxn-window"],text=True).strip(); print(json.loads((Path(root)/"haxelib.json").read_text())["dependencies"]["hxn"])')"
+          cargo install --git https://github.com/hx-n/hxn.git --tag "v$version" --locked hxn-cli
+          hxn plugins
+          hxn window doctor
       - name: Build and run on Ash and hxcpp
         working-directory: examples/headless
         run: |
           run() { if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a "$@"; else "$@"; fi; }
-          haxe -lib hxn-window -main Main -hl main.hl
-          run "$ASH" main.hl
-          haxe -lib hxn-window -main Main -cpp out
-          run out/Main
+          run hxn window check hl --vm "$ASH"
+          run hxn window check cpp
 
   publish:
     needs: [haxelib, try]

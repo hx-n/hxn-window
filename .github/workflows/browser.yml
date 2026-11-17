@@ -1,0 +1,63 @@
+name: Browser
+on:
+  push:
+    branches: [main]
+  pull_request:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
+jobs:
+  check:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        mode: [ash, emcc, emcc-threads]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          runtime: cpp
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: rustup component add rust-src && rustup target add wasm32-unknown-emscripten
+      - name: Install browser tools
+        run: |
+          git clone --depth 1 https://github.com/emscripten-core/emsdk "$RUNNER_TEMP/emsdk"
+          "$RUNNER_TEMP/emsdk/emsdk" install 5.0.7
+          "$RUNNER_TEMP/emsdk/emsdk" activate 5.0.7
+          case "$RUNNER_OS" in
+            Linux) archive=ash-linux-x86_64.tar.gz ;;
+            macOS) archive=ash-macos-aarch64.tar.gz ;;
+          esac
+          mkdir -p "$RUNNER_TEMP/ash-browser"
+          (cd "$RUNNER_TEMP/ash-browser" && curl -fsSL "https://github.com/rayzor-blade/ash/releases/download/v0.1.21/$archive" | tar -xz)
+          echo "ASH=$RUNNER_TEMP/ash-browser/ash" >> "$GITHUB_ENV"
+      - name: Package and check the installed CLI extension
+        env:
+          MODE: ${{ matrix.mode }}
+        run: |
+          source "$RUNNER_TEMP/emsdk/emsdk_env.sh"
+          if [ "$RUNNER_OS" = macOS ]; then
+            export HXN_BROWSER="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+          else
+            export HXN_BROWSER=google-chrome
+          fi
+          case "$MODE" in
+            ash) package=(hl --wasm --threads); check=(hl --wasm --threads --browser --vm "$ASH") ;;
+            emcc) package=(cpp --wasm); check=(cpp --wasm --browser) ;;
+            emcc-threads) package=(cpp --wasm --threads); check=(cpp --wasm --threads --browser) ;;
+          esac
+          hxn package "${package[@]}" --release --out package
+          haxelib install hxn 0.3.6 --always
+          haxelib dev hxn-window "$PWD/package"
+          hxn plugins
+          hxn window doctor
+          python3 -c 'import subprocess,sys; subprocess.run(["hxn", "window", "check", *sys.argv[1:]], timeout=1200, check=True)' "${check[@]}"
+          python3 -c 'import subprocess,sys; subprocess.run(["hxn", "window", "check", *sys.argv[1:]], timeout=1200, check=True)' "${check[@]}"

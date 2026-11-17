@@ -1,0 +1,229 @@
+// Runs the browser event regression under Ash or Emscripten: serves its directory with `ash serve`,
+// which sends the cross-origin isolation headers a threaded module needs,
+// opens it in headless Chrome over the DevTools protocol, and waits for the
+// page to set its title to done or trapped. What the program writes reaches
+// the console of the Worker it runs in: console.log for stdout, console.error
+// for stderr. This prints both, from the page and every Worker it starts, in
+// the order they were written, and exits 0 when the page says done, 1 when it
+// trapped or did not finish.
+//
+//     node ash_page.mjs <ash> <directory> <chrome> [chrome flags...]
+//
+// Node 22 or later, for its global fetch and WebSocket.
+import { spawn } from "node:child_process";
+import { mkdtempSync, rmSync } from "node:fs";
+import { createServer } from "node:net";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+const [ash, dir, chrome, ...flags] = process.argv.slice(2);
+const emcc = ash === "emcc";
+const main = process.env.HXN_TEST_MAIN ?? "Browser";
+const expected = process.env.HXN_TEST_EXPECT ?? "browser events: passed";
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// A port nothing listens on now.
+const freePort = () =>
+  new Promise((resolve, reject) => {
+    const server = createServer();
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", () => {
+      const { port } = server.address();
+      server.close(() => resolve(port));
+    });
+  });
+
+const webPort = await freePort();
+const debugPort = await freePort();
+const profile = mkdtempSync(join(tmpdir(), "hxn-ash-page-"));
+const server = emcc
+  ? spawn("emrun", ["--no_browser", "--serve_after_exit", "--port", String(webPort), join(dir, `${main}.html`)], {stdio: "ignore"})
+  : spawn(ash, ["serve", dir, "--port", String(webPort)], {stdio: "ignore"});
+const browser = spawn(
+  chrome,
+  [
+    "--headless=new",
+    `--remote-debugging-port=${debugPort}`,
+    `--user-data-dir=${profile}`,
+    "--force-device-scale-factor=2",
+    "--no-first-run",
+    "--no-default-browser-check",
+    ...flags,
+    "about:blank",
+  ],
+  { stdio: "ignore" },
+);
+const cleanup = () => {
+  server.kill();
+  browser.kill();
+  try {
+    rmSync(profile, { recursive: true, force: true });
+  } catch {}
+};
+
+process.on("SIGTERM", () => { cleanup(); process.exit(1); });
+let status = 1;
+// What goes to stdout and stderr, in the order it was written, printed once the run is over.
+const lines = [];
+const out = (text) => lines.push({ error: false, text });
+const err = (text) => lines.push({ error: true, text });
+try {
+  let target;
+  for (let i = 0; i < 150 && !target; i++) {
+    try {
+      const response = await fetch(`http://127.0.0.1:${debugPort}/json/new?about:blank`, {
+        method: "PUT",
+      });
+      if (response.ok) target = await response.json();
+    } catch {}
+    if (!target) await sleep(200);
+  }
+  if (!target) throw new Error(`${chrome} did not start`);
+
+  const socket = new WebSocket(target.webSocketDebuggerUrl);
+  await new Promise((resolve, reject) => {
+    socket.onopen = resolve;
+    socket.onerror = () => reject(new Error("the DevTools connection failed"));
+  });
+  let nextId = 1;
+  const waiting = new Map();
+  // Each console call: when, whether it was an error, and its text.
+  const written = [];
+  // The type of each target followed: the program's Worker and the others.
+  const attached = [];
+  const send = (method, params = {}, sessionId) =>
+    new Promise((resolve) => {
+      const id = nextId++;
+      waiting.set(id, resolve);
+      socket.send(JSON.stringify(sessionId ? { id, method, params, sessionId } : { id, method, params }));
+    });
+  // Every Worker, the program's and its agents', is attached before it runs
+  // and paused until its console is followed.
+  const follow = (sessionId) => {
+    send("Runtime.enable", {}, sessionId);
+    send("Target.setAutoAttach", { autoAttach: true, waitForDebuggerOnStart: true, flatten: true }, sessionId);
+    send("Runtime.runIfWaitingForDebugger", {}, sessionId);
+  };
+  socket.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    if (message.id && waiting.has(message.id)) {
+      waiting.get(message.id)(message);
+      waiting.delete(message.id);
+    } else if (message.method === "Target.attachedToTarget") {
+      attached.push(message.params.targetInfo?.type ?? "?");
+      follow(message.params.sessionId);
+    } else if (message.method === "Runtime.consoleAPICalled") {
+      const { type, args, timestamp } = message.params;
+      const text = args.map((a) => (a.value !== undefined ? String(a.value) : a.description ?? "")).join(" ");
+      written.push({ timestamp, error: type === "error" || type === "warning", text });
+      if (process.env.HXN_TEST_TRACE) process.stderr.write(text + "\n");
+    } else if (message.method === "Runtime.exceptionThrown") {
+      // Uncaught, in the web page or any Worker: a browser agent that fails to start, say.
+      const { timestamp, exceptionDetails } = message.params;
+      const text = exceptionDetails.exception?.description ?? exceptionDetails.text;
+      written.push({ timestamp, error: true, text: `uncaught: ${text}` });
+    }
+  };
+  await send("Runtime.enable");
+  await send("Target.setAutoAttach", { autoAttach: true, waitForDebuggerOnStart: true, flatten: true });
+  // HXN_PAGE_CORES sets navigator.hardwareConcurrency, which sizes the web
+  // page's pool of thread agents: a smaller machine's, reproduced on this one.
+  if (process.env.HXN_PAGE_CORES)
+    await send("Emulation.setHardwareConcurrencyOverride", {
+      hardwareConcurrency: Number(process.env.HXN_PAGE_CORES),
+    });
+  await send("Page.navigate", { url: `http://localhost:${webPort}/${emcc ? `${main}.html` : ""}` });
+
+  const timeout = Number(process.env.HXN_PAGE_TIMEOUT ?? 300) * 1000;
+  const deadline = Date.now() + timeout;
+  let title = "";
+  let inputSent = false;
+  while (Date.now() < deadline) {
+    if (!inputSent && written.some(e => e.text.includes("browser ready"))) {
+      inputSent = true;
+      const input = await send("Runtime.evaluate", {expression: `(() => {
+        Object.defineProperty(navigator, 'getGamepads', {configurable:true, value: () => [{index:0, connected:true, id:'test pad', mapping:'standard', buttons:Array.from({length:17}, () => ({value:0, pressed:false})), axes:[0,0,0,0]}]});
+        const canvas = document.querySelector('canvas');
+        canvas.style.width = '400px'; canvas.style.height = '240px';
+        canvas.dispatchEvent(new FocusEvent('focus'));
+        canvas.dispatchEvent(new PointerEvent('pointermove', {pointerId:1, pointerType:'mouse', clientX:20, clientY:20}));
+        canvas.dispatchEvent(new PointerEvent('pointermove', {pointerId:2, pointerType:'touch', clientX:30, clientY:30, pressure:0.5}));
+        canvas.dispatchEvent(new WheelEvent('wheel', {deltaY:12, deltaMode:0}));
+        const input = canvas.editContext ? canvas : document.querySelector('textarea[autocomplete="off"]') || canvas;
+        input.dispatchEvent(new KeyboardEvent('keydown', {key:'a', code:'KeyA', bubbles:true, cancelable:true}));
+        input.dispatchEvent(new KeyboardEvent('keyup', {key:'a', code:'KeyA', bubbles:true}));
+        if (canvas.editContext) {
+          const ec = canvas.editContext;
+          ec.dispatchEvent(new Event('compositionstart'));
+          ec.updateText(0, ec.text.length, 'に'); ec.updateSelection(1,1);
+          ec.dispatchEvent(new Event('textupdate'));
+          ec.updateText(0, ec.text.length, '日本語');
+          ec.dispatchEvent(new Event('compositionend'));
+        } else {
+          input.dispatchEvent(new CompositionEvent('compositionupdate', {data:'に'}));
+          input.dispatchEvent(new CompositionEvent('compositionend', {data:'日本語'}));
+        }
+        Object.defineProperty(document, 'visibilityState', {configurable:true, value:'hidden'});
+        document.dispatchEvent(new Event('visibilitychange'));
+        const r = canvas.getBoundingClientRect();
+        return {x:r.left+10, y:r.top+10};
+      })()`, returnByValue:true});
+      if (input.result?.exceptionDetails) throw new Error(input.result.exceptionDetails.exception?.description ?? input.result.exceptionDetails.text);
+      const pos = input.result.result.value;
+      await send("Input.dispatchMouseEvent", {type:'mousePressed', ...pos, button:'left', clickCount:1});
+      await send("Input.dispatchMouseEvent", {type:'mouseReleased', ...pos, button:'left', clickCount:1});
+    }
+    const state = await send("Runtime.evaluate", { expression: "document.title", returnByValue: true });
+    title = state.result?.result?.value ?? "";
+    if (emcc && written.some(e => e.text.includes(expected) || e.text.startsWith("missing:") || e.text.startsWith("failed:"))) break;
+    if (/ — (done|trapped)$/.test(title)) break;
+    await sleep(250);
+  }
+  // What the last console calls posted before the title changed.
+  await sleep(250);
+  written.sort((a, b) => a.timestamp - b.timestamp);
+  // Ash's runtime writes its own notes to stdout, prefixed `[ash] `; they go
+  // to stderr, as under `ash run`.
+  for (const { error, text } of written) {
+    if (!error && !text.startsWith("[ash] ")) out(text);
+    else err(text);
+  }
+  if (written.length === 0)
+    err(`no console output from the web page: ${attached.length} targets followed (${attached.join(", ") || "none"}), title "${title}"`);
+  if (emcc && written.some(e => e.text.includes(expected))) {
+    status = 0;
+  } else if (/ — done$/.test(title)) {
+    // The title says done however the program ended. Ash's page sets
+    // window.ashOutcome to the exit status; an older one only writes it to its
+    // log, which it keeps in the document whether or not it shows it.
+    const outcome = await send("Runtime.evaluate", {
+      expression: `(() => {
+        const status = window.ashOutcome?.status;
+        if (typeof status === "number") return status;
+        const exited = [...(document.getElementById("out")?.textContent ?? "").matchAll(/exited with (-?\\d+)/g)].pop();
+        return exited ? Number(exited[1]) : 0;
+      })()`,
+      returnByValue: true,
+    });
+    const code = outcome.result?.result?.value ?? 0;
+    if (code === 0) status = 0;
+    else err(`the program exited with ${code}`);
+  } else if (!/ — trapped$/.test(title))
+    err(`the web page did not finish in ${timeout / 1000} s (HXN_PAGE_TIMEOUT)`);
+  if (written.some(e => e.text.startsWith("uncaught:"))) status = 1;
+} catch (e) {
+  err(e.message);
+} finally {
+  cleanup();
+}
+// Writes to a pipe are asynchronous on macOS, and exiting before they finish
+// loses them, so each write is awaited. Each run of lines to one stream is
+// written whole, so the two streams stay in the order the page wrote them.
+const flush = (stream, text) => new Promise((resolve) => stream.write(text, resolve));
+for (let i = 0; i < lines.length; ) {
+  const error = lines[i].error;
+  let text = "";
+  for (; i < lines.length && lines[i].error === error; i++) text += lines[i].text + "\n";
+  await flush(error ? process.stderr : process.stdout, text);
+}
+process.exit(status);

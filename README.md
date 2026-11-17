@@ -5,9 +5,9 @@
 [![hxcpp](https://github.com/hx-n/hxn-window/actions/workflows/hxcpp.yml/badge.svg)](https://github.com/hx-n/hxn-window/actions/workflows/hxcpp.yml)
 [![CPPIA](https://github.com/hx-n/hxn-window/actions/workflows/cppia.yml/badge.svg)](https://github.com/hx-n/hxn-window/actions/workflows/cppia.yml)
 
-A windowing and surface API for Haxe, over winit, for HashLink, Ash, hxcpp
-and CPPIA. The same program compiles for each runtime, and each window
-exposes its native handles for creating a GPU surface.
+A windowing and surface API for Haxe on HashLink, Ash, hxcpp and CPPIA,
+using winit natively and a shared DOM agent in the browser. Windows expose
+the handles a GPU needs to create a surface.
 
 ```haxe
 import hxn.window.Window;
@@ -63,7 +63,7 @@ install compiles once a release's `native/` directory is copied into it.
 
 CI runs each runtime on Linux, macOS and Windows, except HashLink, which runs
 on Linux and Windows. The release builds the iOS and Android libraries, and
-CI does not run them; wasm is not set up yet. On a mobile device, hxcpp links
+CI does not run them. Browser builds use Ash wasm or hxcpp with Emscripten. On a mobile device, hxcpp links
 the static library into the program, and so does Ash for a HashLink program.
 
 ## Classes
@@ -85,8 +85,34 @@ errors are thrown as Haxe exceptions.
 
 `window.platform()` returns a platform code, and `window.raw(0)` through
 `window.raw(3)` return the native window and display handles. The codes are
-1 AppKit, 2 Win32, 3 Xlib, 4 Wayland, 5 Android and 6 UIKit. xgpu's
+1 AppKit, 2 Win32, 3 Xlib, 4 Wayland, 5 Android, 6 UIKit and 7 the browser canvas. xgpu's
 `GpuInstance.surface` takes the code and the four handles in that order.
+
+## Browser builds
+
+The installed haxelib registers its tools with hxn. No repository checkout
+or Rust compiler is needed to check a prebuilt package:
+
+```
+hxn plugins
+hxn window doctor
+hxn window check hl --wasm --threads --browser --vm ash
+hxn window check cpp --wasm --browser
+hxn window check cpp --wasm --threads --browser
+```
+
+Ash builds and serves the HashLink program with its wasm tooling. The cpp
+builds use hxcpp and Emscripten. Threaded builds use shared memory; the
+browser runner supplies the required isolation headers. Native checks are
+`hxn window check hl --vm ash` and `hxn window check cpp`.
+
+A browser window is the page's canvas. Size, DPI, focus, visibility,
+keyboard, pointer, touch, wheel, IME and gamepad input use the same API as
+native windows. The window handles DOM input and CSS sizing while the GPU
+driver owns rendering and the drawing buffer. A page has one window.
+Without threads, `wait` returns available events without blocking. Return
+to the browser between turns, as the hello example does, and use `then`
+for asynchronous results.
 
 ## Examples
 
@@ -116,7 +142,14 @@ named, and fails unless every run passes and prints the same output.
 hxn check hl --vm ash
 hxn check cpp cppia
 hxn package hl cpp --out ../hxn-window-haxelib
+hxn package hl cpp --wasm --threads --release --out ../hxn-window-haxelib
+hxn package cpp --wasm --release --out ../hxn-window-haxelib
 ```
+
+The CLI's before-build hook generates the browser modules from xwindow and
+x-idl. Packaging carries the CLI tool, checks and page modules with the
+prebuilt libraries. Use release packages when combining threaded wasm
+libraries with released GPU drivers.
 
 To build against checkouts of hxn, x-idl and xwindow beside this one, put
 `[patch]` tables for their git URLs in `.cargo/config.toml`, which git
