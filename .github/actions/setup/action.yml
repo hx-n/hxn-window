@@ -52,7 +52,7 @@ runs:
         git clone --depth 1 --branch 1.15 https://github.com/HaxeFoundation/hashlink "$RUNNER_TEMP/hashlink"
         make -C "$RUNNER_TEMP/hashlink" libhl hl
         echo "$RUNNER_TEMP/hashlink" >> "$GITHUB_PATH"
-        echo "LD_LIBRARY_PATH=$RUNNER_TEMP/hashlink" >> "$GITHUB_ENV"
+        echo "LD_LIBRARY_PATH=$RUNNER_TEMP/hashlink${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
     # The HashLink library links against the VM's libhl.lib on Windows, for
     # Ash too, which loads it through its own libhl.dll.
     - if: (inputs.runtime == 'hl' || inputs.runtime == 'ash' || inputs.runtime == 'package') && runner.os == 'Windows'

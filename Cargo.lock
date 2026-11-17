@@ -442,8 +442,8 @@ checksum = "e17592d60ebacc7d5e169f4663c5f84f9161cc90328abcfe8456f41e4dfcb284"
 
 [[package]]
 name = "hxn"
-version = "0.3.6"
-source = "git+https://github.com/hx-n/hxn.git?tag=v0.3.6#41f343676667d6f6cb91aa3a318305b1a75b7dd5"
+version = "0.3.7"
+source = "git+https://github.com/hx-n/hxn.git?tag=v0.3.7#841a6d19c9dbc5011f17e28eca6fd3511699ce59"
 dependencies = [
  "hxn-abi",
  "hxn-macros",
@@ -451,13 +451,13 @@ dependencies = [
 
 [[package]]
 name = "hxn-abi"
-version = "0.3.6"
-source = "git+https://github.com/hx-n/hxn.git?tag=v0.3.6#41f343676667d6f6cb91aa3a318305b1a75b7dd5"
+version = "0.3.7"
+source = "git+https://github.com/hx-n/hxn.git?tag=v0.3.7#841a6d19c9dbc5011f17e28eca6fd3511699ce59"
 
 [[package]]
 name = "hxn-macros"
-version = "0.3.6"
-source = "git+https://github.com/hx-n/hxn.git?tag=v0.3.6#41f343676667d6f6cb91aa3a318305b1a75b7dd5"
+version = "0.3.7"
+source = "git+https://github.com/hx-n/hxn.git?tag=v0.3.7#841a6d19c9dbc5011f17e28eca6fd3511699ce59"
 
 [[package]]
 name = "hxn-window"

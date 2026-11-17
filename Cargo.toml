@@ -33,7 +33,7 @@ xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "
 xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
 
 [dependencies]
-hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.6" }
+hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.7" }
 xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
 
 # Browser controller input uses the DOM agent and xwindow-core; this is the native hub.

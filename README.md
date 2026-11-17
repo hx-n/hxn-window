@@ -90,7 +90,7 @@ errors are thrown as Haxe exceptions.
 
 ## Browser builds
 
-The installed haxelib registers its tools with hxn. No repository checkout
+The installed haxelib registers its tools with hxn 0.3.7 or later. No repository checkout
 or Rust compiler is needed to check a prebuilt package:
 
 ```
