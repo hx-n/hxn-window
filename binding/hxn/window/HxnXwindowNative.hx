@@ -31,6 +31,8 @@ package hxn.window;
 @:noCompletion class HxnXwindowNative {
 	static function memory_held():Float;
 	static function memory_wanted():Bool;
+	static function log_level(level:Int):Void;
+	public static function log_take():Null<haxe.io.Bytes>;
 	static function window_attributes_title(self:hxn.Handle, value:String):Void;
 	static function window_attributes_width(self:hxn.Handle, value:Int):Void;
 	static function window_attributes_height(self:hxn.Handle, value:Int):Void;

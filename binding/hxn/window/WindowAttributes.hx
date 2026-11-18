@@ -5,9 +5,10 @@ package hxn.window;
 	What a window opens with; whatever is left unset is the platform's
 	default. Sizes and positions are logical.
 **/
+@:build(hxn.Log.bind())
 class WindowAttributes {
 	@:noCompletion public var hxnRaw:hxn.Handle;
-	@:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
+	@:keep @:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
 
 	/** An object for a value the library returned. **/
 	@:noCompletion public static function hxnAdopt(hxnRaw:hxn.Handle):WindowAttributes {

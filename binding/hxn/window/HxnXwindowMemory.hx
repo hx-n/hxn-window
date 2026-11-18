@@ -7,5 +7,6 @@ package hxn.window;
 	a delivery does.
 **/
 class HxnXwindowMemory {
+	@:keep static final logging = hxn.Log.attach(level -> HxnXwindowNative.log_level(level), () -> HxnXwindowNative.log_take());
 	public static final meter = new hxn.Gc.Meter(() -> HxnXwindowNative.memory_held(), () -> HxnXwindowNative.memory_wanted());
 }

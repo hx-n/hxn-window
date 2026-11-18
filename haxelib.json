@@ -1,12 +1,12 @@
 {
   "name": "hxn-window",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering",
   "url": "https://github.com/hx-n/hxn-window",
   "license": "Apache",
   "tags": ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering", "cross", "wasm"],
   "contributors": ["darmie", "rayzor"],
-  "releasenote": "Browser windows on Ash wasm and Emscripten, with DOM input and gamepads. Includes prebuilt wasm libraries, installed hxn window commands and source lifecycle hooks.",
+  "releasenote": "Use hxn 0.3.9 shared logging with application-owned filtering and sinks; retain pinned dependency redistribution notices.",
   "hxn": { "cli": {"command":["haxe","-cp","{root}/sources","--run","hxn.window.cli.Tool"],"files":["third-party"],"hooks":["before-build","before-check"],"namespace":"window","version":1} },
-  "dependencies": { "hxn": "0.3.7" }
+  "dependencies": { "hxn": "0.3.9" }
 }

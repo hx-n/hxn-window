@@ -6,9 +6,10 @@ package hxn.window;
 	clipboard together so that a reader takes the richest it understands:
 	`text/plain` beside `text/html`, or `image/png` beside `text/plain`.
 **/
+@:build(hxn.Log.bind())
 class ClipboardItems {
 	@:noCompletion public var hxnRaw:hxn.Handle;
-	@:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
+	@:keep @:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
 
 	/** An object for a value the library returned. **/
 	@:noCompletion public static function hxnAdopt(hxnRaw:hxn.Handle):ClipboardItems {

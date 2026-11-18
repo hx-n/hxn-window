@@ -2,9 +2,10 @@
 package hxn.window;
 
 /** A connection-scoped controller handle; reconnecting invalidates the old handle. **/
+@:build(hxn.Log.bind())
 class Gamepad {
 	@:noCompletion public var hxnRaw:hxn.Handle;
-	@:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
+	@:keep @:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
 
 	/** An object for a value the library returned. **/
 	@:noCompletion public static function hxnAdopt(hxnRaw:hxn.Handle):Gamepad {

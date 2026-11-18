@@ -5,9 +5,10 @@ package hxn.window;
 	A size, depth and refresh rate a monitor can run at, for exclusive
 	fullscreen. The same mode is the same handle.
 **/
+@:build(hxn.Log.bind())
 class VideoMode {
 	@:noCompletion public var hxnRaw:hxn.Handle;
-	@:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
+	@:keep @:noCompletion static final hxnMemory = HxnXwindowMemory.meter;
 
 	/** An object for a value the library returned. **/
 	@:noCompletion public static function hxnAdopt(hxnRaw:hxn.Handle):VideoMode {

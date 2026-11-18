@@ -2,11 +2,11 @@
   "inputs": [
     {
       "path": "Cargo.lock",
-      "sha256": "c0f51875c42441ad9fee11d6085624201c15e6f1528db751de446b741ffc805f"
+      "sha256": "c072edddf73e1f203e43128bf423b31859d7837f18568b718b75156c7ac7519b"
     },
     {
       "path": "Cargo.toml",
-      "sha256": "edaab5edc16dad8763bf3119e17ec9e28294230e22ad906bf1e09ea038364d00"
+      "sha256": "514f10d5a6c8e6b70c4123e3aa2851599d4bcd6155ab8537c1386ec1f5b3793a"
     }
   ],
   "packages": [
@@ -573,32 +573,32 @@
     },
     {
       "name": "hxn",
-      "version": "0.3.7",
+      "version": "0.3.9",
       "license": "Apache-2.0",
       "repository": "https://github.com/hx-n/hxn",
-      "source": "git+https://github.com/hx-n/hxn.git?tag=v0.3.7#841a6d19c9dbc5011f17e28eca6fd3511699ce59",
+      "source": "git+https://github.com/hx-n/hxn.git?tag=v0.3.9#562fc8b8bd214c7339baeea92c7aa7c0b7bffc9b",
       "files": [
-        "licenses/hxn-0.3.7/LICENSE"
+        "licenses/hxn-0.3.9/LICENSE"
       ]
     },
     {
       "name": "hxn-abi",
-      "version": "0.3.7",
+      "version": "0.3.9",
       "license": "Apache-2.0",
       "repository": "https://github.com/hx-n/hxn",
-      "source": "git+https://github.com/hx-n/hxn.git?tag=v0.3.7#841a6d19c9dbc5011f17e28eca6fd3511699ce59",
+      "source": "git+https://github.com/hx-n/hxn.git?tag=v0.3.9#562fc8b8bd214c7339baeea92c7aa7c0b7bffc9b",
       "files": [
-        "licenses/hxn-abi-0.3.7/LICENSE"
+        "licenses/hxn-abi-0.3.9/LICENSE"
       ]
     },
     {
       "name": "hxn-macros",
-      "version": "0.3.7",
+      "version": "0.3.9",
       "license": "Apache-2.0",
       "repository": "https://github.com/hx-n/hxn",
-      "source": "git+https://github.com/hx-n/hxn.git?tag=v0.3.7#841a6d19c9dbc5011f17e28eca6fd3511699ce59",
+      "source": "git+https://github.com/hx-n/hxn.git?tag=v0.3.9#562fc8b8bd214c7339baeea92c7aa7c0b7bffc9b",
       "files": [
-        "licenses/hxn-macros-0.3.7/LICENSE"
+        "licenses/hxn-macros-0.3.9/LICENSE"
       ]
     },
     {
