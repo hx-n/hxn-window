@@ -39,6 +39,7 @@ jobs:
           - { os: ubuntu-latest, name: emcc-wasm-threads, runtimes: cpp, wasm: true, threads: true, emcc: true }
     steps:
       - uses: actions/checkout@v4
+      - run: python3 scripts/third_party_notices.py --check
       - uses: ./.github/actions/setup
         with:
           runtime: package
@@ -76,7 +77,7 @@ jobs:
           for part in parts/*/; do
             cp -R "$part/native/." haxelib/native/
           done
-          cp -R README.md LICENSE skills haxelib/
+          cp -R README.md LICENSE skills third-party haxelib/
           ls haxelib/native
           version="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
           (cd haxelib && zip -qr "../hxn-window-$version.zip" .)

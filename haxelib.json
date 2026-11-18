@@ -7,6 +7,6 @@
   "tags": ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering", "cross", "wasm"],
   "contributors": ["darmie", "rayzor"],
   "releasenote": "Browser windows on Ash wasm and Emscripten, with DOM input and gamepads. Includes prebuilt wasm libraries, installed hxn window commands and source lifecycle hooks.",
-  "hxn": { "cli": {"command":["haxe","-cp","{root}/sources","--run","hxn.window.cli.Tool"],"hooks":["before-build","before-check"],"namespace":"window","version":1} },
+  "hxn": { "cli": {"command":["haxe","-cp","{root}/sources","--run","hxn.window.cli.Tool"],"files":["third-party"],"hooks":["before-build","before-check"],"namespace":"window","version":1} },
   "dependencies": { "hxn": "0.3.7" }
 }

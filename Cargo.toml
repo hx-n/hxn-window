@@ -25,6 +25,7 @@ version = 1
 namespace = "window"
 command = ["haxe", "-cp", "{root}/sources", "--run", "hxn.window.cli.Tool"]
 hooks = ["before-build", "before-check"]
+files = ["third-party"]
 
 [build-dependencies]
 cc = "1"

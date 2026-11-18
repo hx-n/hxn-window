@@ -163,3 +163,9 @@ agents. The haxelib includes it.
 ## License
 
 Apache-2.0. xwindow and x-idl are MIT.
+
+## Third-party notices
+
+Dependency licenses and redistribution notices are in
+[third-party/NOTICES.md](https://github.com/hx-n/hxn-window/blob/main/third-party/NOTICES.md). Retain the applicable
+notices when redistributing binaries.
