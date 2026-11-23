@@ -163,6 +163,8 @@ hxn_status hxn_xwindow_gamepad_drain(hxn_slice_mut output, int32_t *out, hxn_buf
 hxn_status hxn_xwindow_gamepad_valid(hxn_handle *self, int32_t *out, hxn_buf *err);
 hxn_status hxn_xwindow_gamepad_device_id(hxn_handle *self, int32_t *out, hxn_buf *err);
 hxn_status hxn_xwindow_gamepad_name(hxn_handle *self, hxn_buf *out, hxn_buf *err);
+hxn_status hxn_xwindow_gamepad_vendor_id(hxn_handle *self, int32_t *out, hxn_buf *err);
+hxn_status hxn_xwindow_gamepad_product_id(hxn_handle *self, int32_t *out, hxn_buf *err);
 hxn_status hxn_xwindow_gamepad_has_button(hxn_handle *self, int32_t button, int32_t *out, hxn_buf *err);
 hxn_status hxn_xwindow_gamepad_has_axis(hxn_handle *self, int32_t axis, int32_t *out, hxn_buf *err);
 hxn_status hxn_xwindow_gamepad_button(hxn_handle *self, int32_t button, double *out, hxn_buf *err);

@@ -895,6 +895,20 @@ inline ::String gamepad_name(void *self) {
 	return hxn::take_string(out);
 }
 
+inline int gamepad_vendor_id(void *self) {
+	int out = 0;
+	hxn_buf err = HXN_BUF_EMPTY;
+	hxn::check(hxn_xwindow_gamepad_vendor_id((hxn_handle *)self, &out, &err), err);
+	return out;
+}
+
+inline int gamepad_product_id(void *self) {
+	int out = 0;
+	hxn_buf err = HXN_BUF_EMPTY;
+	hxn::check(hxn_xwindow_gamepad_product_id((hxn_handle *)self, &out, &err), err);
+	return out;
+}
+
 inline bool gamepad_has_button(void *self, int button) {
 	int out = 0;
 	hxn_buf err = HXN_BUF_EMPTY;
