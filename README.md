@@ -76,7 +76,7 @@ All in the package `hxn.window`:
 | `Window` | Events through `poll` and `wait`, geometry and state, cursor, IME and the clipboard. |
 | `Event` | `Closed`, `Resized`, `KeyboardInput`, `MouseInput`, `Touch`, `Ime` and the rest; `None` when `wait` times out. |
 | `Monitor`, `VideoMode` | Displays and their video modes. |
-| `Gamepad` | Buttons, axes, rumble and their events. |
+| `Gamepad` | Buttons, axes, rumble and their events, and the USB vendor and product ids. |
 
 `Window.wait` is a blocking call; the GC can run while it blocks. Platform
 errors are thrown as Haxe exceptions.

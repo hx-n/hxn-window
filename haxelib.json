@@ -1,12 +1,12 @@
 {
   "name": "hxn-window",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering",
   "url": "https://github.com/hx-n/hxn-window",
   "license": "Apache",
   "tags": ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering", "cross", "wasm"],
   "contributors": ["darmie", "rayzor"],
-  "releasenote": "Use hxn 0.3.9 shared logging with application-owned filtering and sinks; retain pinned dependency redistribution notices.",
+  "releasenote": "Report each gamepad's USB vendor and product ids.",
   "hxn": { "cli": {"command":["haxe","-cp","{root}/sources","--run","hxn.window.cli.Tool"],"files":["third-party"],"hooks":["before-build","before-check"],"namespace":"window","version":1} },
   "dependencies": { "hxn": "0.3.9" }
 }

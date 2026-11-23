@@ -1,6 +1,6 @@
 [package]
 name = "hxn-window"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2024"
 description = "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering"
 repository = "https://github.com/hx-n/hxn-window"
@@ -16,7 +16,7 @@ name = "hxn_window"
 library = "xwindow"
 haxelib = "hxn-window"
 contributors = ["darmie", "rayzor"]
-releasenote = "Use hxn 0.3.9 shared logging with application-owned filtering and sinks; retain pinned dependency redistribution notices."
+releasenote = "Report each gamepad's USB vendor and product ids."
 # The headless-window test `hxn check` and `hxn run` build.
 haxe = "examples/headless"
 
@@ -30,20 +30,20 @@ files = ["third-party"]
 [build-dependencies]
 cc = "1"
 x_idl = { git = "https://github.com/rayzor-blade/x-idl.git", rev = "1055cfd7e4925ebc7028175051dafb67d0b9dbe1" }
-xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
-xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
+xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
+xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
 
 [dependencies]
 hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.9" }
-xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
+xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
 
 # Browser controller input uses the DOM agent and xwindow-core; this is the native hub.
 [target.'cfg(not(target_family = "wasm"))'.dependencies]
-xwindow-gamepad = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
+xwindow-gamepad = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
 winit = "0.30"
 raw-window-handle = "0.6"
-xwindow-appicon = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
-xwindow-clipboard = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "99763ac0c7ace0499409a743fe3ea6be6f75e6fc" }
+xwindow-appicon = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
+xwindow-clipboard = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
 
 # winit on Android needs the activity the host starts.
 [target.'cfg(target_os = "android")'.dependencies]

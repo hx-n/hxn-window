@@ -60,7 +60,10 @@ window.close();
   (`setCursorIcon`, `setCursorGrab`, `setCursorImage`), IME, monitors
   (`primaryMonitor`, `monitor(i)`) and the clipboard (`Window.clipboardText`).
 - `Gamepad` is static: `Gamepad.count()`, `Gamepad.at(i)`, `Gamepad.poll()`
-  for events; each pad has `button`, `axis`, `pressed` and `rumble`.
+  for events; each pad has `button`, `axis`, `pressed` and `rumble`, and
+  `vendorId()` and `productId()`, the USB ids (-1 where the platform does
+  not report them). Tell the controller family from the vendor id, not from
+  `name()`.
 
 ## Rules
 

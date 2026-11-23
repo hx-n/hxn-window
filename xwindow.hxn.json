@@ -1473,6 +1473,24 @@
           "blocking": false
         },
         {
+          "name": "vendor_id",
+          "docs": "The USB vendor id, such as 0x054c for Sony, or -1 where the platform\ndoes not report it.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
+          "name": "product_id",
+          "docs": "The USB product id, or -1 where the platform does not report it.",
+          "kind": "method",
+          "params": [],
+          "returns": "i32",
+          "fallible": true,
+          "blocking": false
+        },
+        {
           "name": "has_button",
           "kind": "method",
           "params": [{ "name": "button", "type": "GamepadButton" }],

@@ -177,6 +177,8 @@ package hxn.window;
 	static function gamepad_valid(self:hxn.Handle):Bool;
 	static function gamepad_device_id(self:hxn.Handle):Int;
 	static function gamepad_name(self:hxn.Handle):String;
+	static function gamepad_vendor_id(self:hxn.Handle):Int;
+	static function gamepad_product_id(self:hxn.Handle):Int;
 	static function gamepad_has_button(self:hxn.Handle, button:Int):Bool;
 	static function gamepad_has_axis(self:hxn.Handle, axis:Int):Bool;
 	static function gamepad_button(self:hxn.Handle, button:Int):Float;

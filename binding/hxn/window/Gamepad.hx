@@ -54,6 +54,17 @@ class Gamepad {
 	public function name():String
 		return HxnXwindowNative.gamepad_name(hxnRaw);
 
+	/**
+		The USB vendor id, such as 0x054c for Sony, or -1 where the platform
+		does not report it.
+	**/
+	public function vendorId():Int
+		return HxnXwindowNative.gamepad_vendor_id(hxnRaw);
+
+	/** The USB product id, or -1 where the platform does not report it. **/
+	public function productId():Int
+		return HxnXwindowNative.gamepad_product_id(hxnRaw);
+
 	public function hasButton(button:GamepadButton):Bool
 		return HxnXwindowNative.gamepad_has_button(hxnRaw, button);
 
