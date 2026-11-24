@@ -2,11 +2,11 @@
   "inputs": [
     {
       "path": "Cargo.lock",
-      "sha256": "c072edddf73e1f203e43128bf423b31859d7837f18568b718b75156c7ac7519b"
+      "sha256": "5d80b8fd7ddfbbf0b8167ff866d2dd199f4223eed33a01ca91ffcf0f373166fd"
     },
     {
       "path": "Cargo.toml",
-      "sha256": "514f10d5a6c8e6b70c4123e3aa2851599d4bcd6155ab8537c1386ec1f5b3793a"
+      "sha256": "10a4ec834579db1d11b4229b8e656ea7877cf9c8ba2b194fe5936938845f185a"
     }
   ],
   "packages": [
@@ -558,17 +558,6 @@
       "files": [
         "licenses/hermit-abi-0.5.3/LICENSE-APACHE",
         "licenses/hermit-abi-0.5.3/LICENSE-MIT"
-      ]
-    },
-    {
-      "name": "hl_abi",
-      "version": "0.1.0",
-      "license": "MIT",
-      "repository": null,
-      "source": "git+https://github.com/rayzor-blade/hl_abi#f38e06df4c7f7d7e79348df345c71ea70770a82d",
-      "files": [
-        "licenses/hl_abi-0.1.0/LICENSE-MIT",
-        "licenses/hl_abi-0.1.0/UPSTREAM-MANIFEST.txt"
       ]
     },
     {
@@ -2295,7 +2284,7 @@
       "version": "0.1.0",
       "license": "MIT",
       "repository": "https://github.com/rayzor-blade/xwindow",
-      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=99763ac0c7ace0499409a743fe3ea6be6f75e6fc#99763ac0c7ace0499409a743fe3ea6be6f75e6fc",
+      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902#9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902",
       "files": [
         "licenses/xwindow-appicon-0.1.0/LICENSE"
       ]
@@ -2305,7 +2294,7 @@
       "version": "0.1.0",
       "license": "MIT",
       "repository": "https://github.com/rayzor-blade/xwindow",
-      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=99763ac0c7ace0499409a743fe3ea6be6f75e6fc#99763ac0c7ace0499409a743fe3ea6be6f75e6fc",
+      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902#9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902",
       "files": [
         "licenses/xwindow-backend-0.1.0/LICENSE"
       ]
@@ -2315,7 +2304,7 @@
       "version": "0.1.0",
       "license": "MIT",
       "repository": "https://github.com/rayzor-blade/xwindow",
-      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=99763ac0c7ace0499409a743fe3ea6be6f75e6fc#99763ac0c7ace0499409a743fe3ea6be6f75e6fc",
+      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902#9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902",
       "files": [
         "licenses/xwindow-bindgen-0.1.0/LICENSE"
       ]
@@ -2325,7 +2314,7 @@
       "version": "0.1.0",
       "license": "MIT",
       "repository": "https://github.com/rayzor-blade/xwindow",
-      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=99763ac0c7ace0499409a743fe3ea6be6f75e6fc#99763ac0c7ace0499409a743fe3ea6be6f75e6fc",
+      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902#9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902",
       "files": [
         "licenses/xwindow-clipboard-0.1.0/LICENSE"
       ]
@@ -2335,7 +2324,7 @@
       "version": "0.1.0",
       "license": "MIT",
       "repository": "https://github.com/rayzor-blade/xwindow",
-      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=99763ac0c7ace0499409a743fe3ea6be6f75e6fc#99763ac0c7ace0499409a743fe3ea6be6f75e6fc",
+      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902#9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902",
       "files": [
         "licenses/xwindow-core-0.1.0/LICENSE"
       ]
@@ -2345,7 +2334,7 @@
       "version": "0.1.0",
       "license": "MIT",
       "repository": "https://github.com/rayzor-blade/xwindow",
-      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=99763ac0c7ace0499409a743fe3ea6be6f75e6fc#99763ac0c7ace0499409a743fe3ea6be6f75e6fc",
+      "source": "git+https://github.com/rayzor-blade/xwindow.git?rev=9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902#9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902",
       "files": [
         "licenses/xwindow-gamepad-0.1.0/LICENSE"
       ]
