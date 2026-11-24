@@ -561,6 +561,17 @@
       ]
     },
     {
+      "name": "hl_abi",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": null,
+      "source": "git+https://github.com/rayzor-blade/hl_abi#f38e06df4c7f7d7e79348df345c71ea70770a82d",
+      "files": [
+        "licenses/hl_abi-0.1.0/LICENSE-MIT",
+        "licenses/hl_abi-0.1.0/UPSTREAM-MANIFEST.txt"
+      ]
+    },
+    {
       "name": "hxn",
       "version": "0.3.9",
       "license": "Apache-2.0",

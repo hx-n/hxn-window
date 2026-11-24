@@ -61,6 +61,7 @@ When redistributing binaries, retain the applicable notices and license texts.
 | gilrs-core 0.6.8 | Apache-2.0/MIT | [LICENSE-APACHE](licenses/gilrs-core-0.6.8/LICENSE-APACHE) |
 | hashbrown 0.17.1 | MIT OR Apache-2.0 | [LICENSE-APACHE](licenses/hashbrown-0.17.1/LICENSE-APACHE), [LICENSE-MIT](licenses/hashbrown-0.17.1/LICENSE-MIT) |
 | hermit-abi 0.5.3 | MIT OR Apache-2.0 | [LICENSE-APACHE](licenses/hermit-abi-0.5.3/LICENSE-APACHE), [LICENSE-MIT](licenses/hermit-abi-0.5.3/LICENSE-MIT) |
+| hl_abi 0.1.0 | MIT | [LICENSE-MIT](licenses/hl_abi-0.1.0/LICENSE-MIT), [UPSTREAM-MANIFEST.txt](licenses/hl_abi-0.1.0/UPSTREAM-MANIFEST.txt) |
 | hxn 0.3.9 | Apache-2.0 | [LICENSE](licenses/hxn-0.3.9/LICENSE) |
 | hxn-abi 0.3.9 | Apache-2.0 | [LICENSE](licenses/hxn-abi-0.3.9/LICENSE) |
 | hxn-macros 0.3.9 | Apache-2.0 | [LICENSE](licenses/hxn-macros-0.3.9/LICENSE) |
