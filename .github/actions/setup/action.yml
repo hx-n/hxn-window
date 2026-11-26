@@ -83,11 +83,13 @@ runs:
         else
           echo "$RUNNER_TEMP/ash" >> "$GITHUB_PATH"
         fi
-    # The command of the hxn release the crate depends on, since the two must
-    # match.
+    # The command and the haxelib of the hxn release the crate depends on, since
+    # they must match. The library's tool, which hxn runs for the build hooks,
+    # selects the haxelib with -lib hxn.
     - shell: bash
       run: |
         tag="$(sed -n 's|^hxn = { git = "https://github.com/hx-n/hxn.git", tag = "\(v[0-9.]*\)" }|\1|p' Cargo.toml)"
         test -n "$tag"
         cargo install --git https://github.com/hx-n/hxn.git --tag "$tag" --locked hxn-cli
         hxn version
+        haxelib install hxn "${tag#v}" --always --quiet
