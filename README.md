@@ -51,7 +51,7 @@ haxe -lib hxn-window -main Main -cpp out
 The haxelib contains the generated classes and prebuilt native libraries for
 Linux x86-64 and ARM64, macOS arm64 and Windows x86-64, and as static
 libraries for Intel macOS (hxcpp only), iOS, the iOS simulator and Android
-arm64, so a program needs no Rust. For
+arm64 and x86-64, so a program needs no Rust. For
 HashLink, the native library is copied next to the `.hl` output at compile
 time. On Linux, hxcpp links against libudev for gamepads: install
 `libudev-dev`. Each GitHub release also has the haxelib as a ZIP, which
@@ -65,6 +65,9 @@ CI runs each runtime on Linux, macOS and Windows, except HashLink, which runs
 on Linux and Windows. The release builds the iOS and Android libraries, and
 CI does not run them. Browser builds use Ash wasm or hxcpp with Emscripten. On a mobile device, hxcpp links
 the static library into the program, and so does Ash for a HashLink program.
+On Android, the library exports `android_main`, which a `NativeActivity` calls:
+it gives the activity to the window and then runs the program's entry,
+`xwindow_main`, which Ash defines in each program that it builds for Android.
 
 ## Classes
 

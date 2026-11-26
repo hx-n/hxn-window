@@ -34,6 +34,7 @@ jobs:
           - { os: macos-latest,  name: ios,           runtimes: hl cpp, target: aarch64-apple-ios }
           - { os: macos-latest,  name: ios-simulator, runtimes: hl cpp, target: aarch64-apple-ios-sim }
           - { os: ubuntu-latest, name: android,       runtimes: hl cpp, target: aarch64-linux-android }
+          - { os: ubuntu-latest, name: android-x86_64, runtimes: hl cpp, target: x86_64-linux-android }
           - { os: ubuntu-latest, name: ash-wasm-threads, runtimes: hl, wasm: true, threads: true }
           - { os: ubuntu-latest, name: emcc-wasm, runtimes: cpp, wasm: true, emcc: true }
           - { os: ubuntu-latest, name: emcc-wasm-threads, runtimes: cpp, wasm: true, threads: true, emcc: true }

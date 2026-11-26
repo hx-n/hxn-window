@@ -15,7 +15,7 @@ haxe -lib hxn-window -main Main -cpp out        # hxcpp
 
 The haxelib carries prebuilt native libraries for Linux x86-64 and ARM64,
 macOS arm64 and Windows x86-64, and static libraries for Intel macOS (hxcpp
-only), iOS, the iOS simulator and Android arm64; a program needs no Rust. For HashLink the `.hdll` is copied
+only), iOS, the iOS simulator and Android arm64 and x86-64; a program needs no Rust. For HashLink the `.hdll` is copied
 beside the `.hl` output. On Linux, hxcpp links libudev for gamepads, so
 install `libudev-dev`. Browser builds support threaded Ash wasm and hxcpp/Emscripten with or without threads. A
 `haxelib git` install has no native libraries until a release ZIP's
