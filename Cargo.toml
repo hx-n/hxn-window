@@ -23,7 +23,7 @@ haxe = "examples/headless"
 [package.metadata.hxn.cli]
 version = 1
 namespace = "window"
-command = ["haxe", "-cp", "{root}/sources", "--run", "hxn.window.cli.Tool"]
+command = ["haxe", "-lib", "hxn", "-cp", "{root}/sources", "--run", "hxn.window.cli.Tool"]
 hooks = ["before-build", "before-check"]
 files = ["third-party"]
 
@@ -34,7 +34,7 @@ xwindow-backend = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "
 xwindow-bindgen = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
 
 [dependencies]
-hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.9" }
+hxn = { git = "https://github.com/hx-n/hxn.git", tag = "v0.3.11" }
 xwindow-core = { git = "https://github.com/rayzor-blade/xwindow.git", rev = "9b8b53259ba94b33c2e5bdefdf3a06abbd2dc902" }
 
 # Browser controller input uses the DOM agent and xwindow-core; this is the native hub.

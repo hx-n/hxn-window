@@ -62,9 +62,9 @@ When redistributing binaries, retain the applicable notices and license texts.
 | hashbrown 0.17.1 | MIT OR Apache-2.0 | [LICENSE-APACHE](licenses/hashbrown-0.17.1/LICENSE-APACHE), [LICENSE-MIT](licenses/hashbrown-0.17.1/LICENSE-MIT) |
 | hermit-abi 0.5.3 | MIT OR Apache-2.0 | [LICENSE-APACHE](licenses/hermit-abi-0.5.3/LICENSE-APACHE), [LICENSE-MIT](licenses/hermit-abi-0.5.3/LICENSE-MIT) |
 | hl_abi 0.1.0 | MIT | [LICENSE-MIT](licenses/hl_abi-0.1.0/LICENSE-MIT), [UPSTREAM-MANIFEST.txt](licenses/hl_abi-0.1.0/UPSTREAM-MANIFEST.txt) |
-| hxn 0.3.9 | Apache-2.0 | [LICENSE](licenses/hxn-0.3.9/LICENSE) |
-| hxn-abi 0.3.9 | Apache-2.0 | [LICENSE](licenses/hxn-abi-0.3.9/LICENSE) |
-| hxn-macros 0.3.9 | Apache-2.0 | [LICENSE](licenses/hxn-macros-0.3.9/LICENSE) |
+| hxn 0.3.11 | Apache-2.0 | [LICENSE](licenses/hxn-0.3.11/LICENSE) |
+| hxn-abi 0.3.11 | Apache-2.0 | [LICENSE](licenses/hxn-abi-0.3.11/LICENSE) |
+| hxn-macros 0.3.11 | Apache-2.0 | [LICENSE](licenses/hxn-macros-0.3.11/LICENSE) |
 | indexmap 2.14.2 | Apache-2.0 OR MIT | [LICENSE-APACHE](licenses/indexmap-2.14.2/LICENSE-APACHE), [LICENSE-MIT](licenses/indexmap-2.14.2/LICENSE-MIT) |
 | inotify 0.11.5 | ISC | [LICENSE](licenses/inotify-0.11.5/LICENSE) |
 | inotify-sys 0.1.8 | ISC | [LICENSE](licenses/inotify-sys-0.1.8/LICENSE) |

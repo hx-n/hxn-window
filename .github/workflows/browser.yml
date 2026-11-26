@@ -55,7 +55,7 @@ jobs:
             emcc-threads) package=(cpp --wasm --threads); check=(cpp --wasm --threads --browser) ;;
           esac
           hxn package "${package[@]}" --release --out package
-          haxelib install hxn 0.3.9 --always
+          haxelib install hxn 0.3.11 --always
           haxelib dev hxn-window "$PWD/package"
           hxn plugins
           hxn window doctor

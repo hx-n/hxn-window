@@ -7,6 +7,6 @@
   "tags": ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering", "cross", "wasm"],
   "contributors": ["darmie", "rayzor"],
   "releasenote": "Report each gamepad's USB vendor and product ids.",
-  "hxn": { "cli": {"command":["haxe","-cp","{root}/sources","--run","hxn.window.cli.Tool"],"files":["third-party"],"hooks":["before-build","before-check"],"namespace":"window","version":1} },
-  "dependencies": { "hxn": "0.3.9" }
+  "hxn": { "cli": {"command":["haxe","-lib","hxn","-cp","{root}/sources","--run","hxn.window.cli.Tool"],"files":["third-party"],"hooks":["before-build","before-check"],"namespace":"window","version":1} },
+  "dependencies": { "hxn": "0.3.11" }
 }
