@@ -19,15 +19,22 @@ mod backend {
     }
 }
 
+#[cfg(target_os = "android")]
+mod android;
+
 /// The entry that winit's native activity calls on Android, on the activity's thread. It
-/// gives the activity to the window backend, then runs the program, which defines its entry
-/// as `xwindow_main`. Ash defines that entry in each program that it builds for Android.
+/// publishes the activity for `hxn_android_context`, copies the program's files out of the
+/// APK and gives the activity to the window backend. Then it runs the program, which
+/// defines its entry as `xwindow_main`. Ash defines that entry in each program that it
+/// builds for Android. When it returns, the activity finishes.
 #[cfg(target_os = "android")]
 #[unsafe(no_mangle)]
 fn android_main(app: winit::platform::android::activity::AndroidApp) {
     unsafe extern "C" {
         fn xwindow_main();
     }
+    android::publish(&app);
+    android::unpack(&app);
     backend::android_app(app);
     unsafe { xwindow_main() }
 }

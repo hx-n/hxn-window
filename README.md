@@ -65,9 +65,12 @@ CI runs each runtime on Linux, macOS and Windows, except HashLink, which runs
 on Linux and Windows. The release builds the iOS and Android libraries, and
 CI does not run them. Browser builds use Ash wasm or hxcpp with Emscripten. On a mobile device, hxcpp links
 the static library into the program, and so does Ash for a HashLink program.
-On Android, the library exports `android_main`, which a `NativeActivity` calls:
-it gives the activity to the window and then runs the program's entry,
-`xwindow_main`, which Ash defines in each program that it builds for Android.
+On Android, the library exports `android_main`, which a `NativeActivity` calls.
+It copies the files that `hxn build` put in the APK into the app's data
+directory and runs the program there. Then it gives the activity to the window
+and runs the program's entry, `xwindow_main`. Ash defines that entry in each
+program that it builds for Android. Other libraries in the program get the JavaVM and
+the activity from the C function `hxn_android_context`.
 
 ## Classes
 
