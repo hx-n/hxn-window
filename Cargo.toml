@@ -16,7 +16,7 @@ name = "hxn_window"
 library = "xwindow"
 haxelib = "hxn-window"
 contributors = ["darmie", "rayzor"]
-releasenote = "Report each gamepad's USB vendor and product ids."
+releasenote = "Export android_main, which a NativeActivity calls, so hxn build makes an Android app with a window, for arm64 and x86-64. The app runs in its data directory, which holds the files of its APK. hxn_android_context gives other libraries the JavaVM and the activity. Needs hxn 0.3.11."
 # The headless-window test `hxn check` and `hxn run` build.
 haxe = "examples/headless"
 
