@@ -174,7 +174,8 @@ jobs:
       - uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.3.6
-      # haxelib accepts a new project only from its first contributor.
+      # haxelib accepts a new project only from its first contributor. The server
+      # unpacks a large ZIP for longer than the client's default timeout.
       - env:
           HAXELIB_PASSWORD: ${{ secrets.HAXELIB_PASSWORD }}
-        run: haxelib submit "$ZIP" darmie "$HAXELIB_PASSWORD" --never < /dev/null
+        run: haxelib -notimeout submit "$ZIP" darmie "$HAXELIB_PASSWORD" --never < /dev/null

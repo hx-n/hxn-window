@@ -1,0 +1,30 @@
+name: publish
+# Submits the haxelib ZIP of an existing GitHub release, for a release whose
+# submission did not finish. haxelib refuses a version that it already has.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The release tag, such as v0.2.4
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::$TAG is not a release tag"; exit 1; }
+          gh release download "$TAG" -R "$GITHUB_REPOSITORY" --pattern 'hxn-window-*.zip'
+          echo "ZIP=$(ls hxn-window-*.zip)" >> "$GITHUB_ENV"
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.6
+      # The server unpacks a large ZIP for longer than the client's default timeout.
+      - env:
+          HAXELIB_PASSWORD: ${{ secrets.HAXELIB_PASSWORD }}
+        run: haxelib -notimeout submit "$ZIP" darmie "$HAXELIB_PASSWORD" --never < /dev/null
