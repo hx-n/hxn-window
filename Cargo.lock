@@ -461,7 +461,7 @@ source = "git+https://github.com/hx-n/hxn.git?tag=v0.3.11#da060b2d6570988d21d030
 
 [[package]]
 name = "hxn-window"
-version = "0.2.3"
+version = "0.2.4"
 dependencies = [
  "cc",
  "hxn",

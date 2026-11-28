@@ -1,6 +1,6 @@
 [package]
 name = "hxn-window"
-version = "0.2.3"
+version = "0.2.4"
 edition = "2024"
 description = "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering"
 repository = "https://github.com/hx-n/hxn-window"

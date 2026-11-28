@@ -1,12 +1,12 @@
 {
   "name": "hxn-window",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Windowing and surfaces for Haxe: windows, input, monitors and native handles for rendering",
   "url": "https://github.com/hx-n/hxn-window",
   "license": "Apache",
   "tags": ["window", "input", "haxe", "hashlink", "hxcpp", "cppia", "monitors", "gamepads", "native", "surface", "rendering", "cross", "wasm"],
   "contributors": ["darmie", "rayzor"],
-  "releasenote": "Report each gamepad's USB vendor and product ids.",
+  "releasenote": "Export android_main, which a NativeActivity calls, so hxn build makes an Android app with a window, for arm64 and x86-64. The app runs in its data directory, which holds the files of its APK. hxn_android_context gives other libraries the JavaVM and the activity. Needs hxn 0.3.11.",
   "hxn": { "cli": {"command":["haxe","-lib","hxn","-cp","{root}/sources","--run","hxn.window.cli.Tool"],"files":["third-party"],"hooks":["before-build","before-check"],"namespace":"window","version":1} },
   "dependencies": { "hxn": "0.3.11" }
 }
